@@ -1,0 +1,11 @@
+[% meta.title = 'Delete Note' %]
+<h2>Delete Note</h2>
+[% PROCESS include/html/messages.tt -%]
+<br />
+Are you sure you want to delete this note?
+<br /><br />
+<div style="border: solid;">
+[% note.notes -%]
+</div>
+<br /><br />
+[% form.render %]

@@ -1,0 +1,404 @@
+html, body {
+	background-color: #efefef !important;
+}
+table.tablesorter {
+	font-size: 14px;	
+}
+
+.ps-caption-content < h2 {
+	color: #FFF;
+}
+
+p {
+	line-height: 1em;
+}
+
+#wrapper {
+	background-color: #FFFFFF !important;
+}
+.ui-icon-site {
+	background-image:url(/static/images/jquery/mobile/site.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-facebook {
+	background-image:url(/static/images/jquery/mobile/facebook.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-twitter {
+	background-image:url(/static/images/jquery/mobile/twitter.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-account {
+	background-image:url(/static/images/jquery/mobile/account.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-register {
+	background-image:url(/static/images/jquery/mobile/register.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-desktop {
+	background-image:url(/static/images/jquery/mobile/desktop.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-mobile {
+	background-image:url(/static/images/jquery/mobile/mobile.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-tablet {
+	background-image:url(/static/images/jquery/mobile/tablet.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-login {
+	background-image:url(/static/images/jquery/mobile/login.png);
+	background-size: 18px 18px;
+}
+
+.ui-icon-logout {
+	background-image:url(/static/images/jquery/mobile/logout.png);
+	background-size: 18px 18px;
+}
+
+.sharelinks iframe {
+		margin-bottom: -5px;
+}
+
+.error_message {display:block;}
+.error {background-color:#FF8C8C;}
+
+.message {
+	height: 20px;
+	background-color:#3F9;
+	font-weight: bold;
+}
+
+.ui-field-contain div.ui-slider-switch { width: 9em }
+
+/* Red button theme for JQuery Mobile
+ * - Use data-theme="r" for red versions of the default JQuery Mobile Buttons.
+ ******************************************************************************************/
+
+.ui-btn-up-r {
+    border: 1px solid #721414;
+    background: #AB2525;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 -1px 1px #000;
+    background-image: -moz-linear-gradient(top, #C54E4E, #AB2525);
+    background-image: -webkit-gradient(linear,left top,left bottom,
+        color-stop(0, #C54E4E),
+        color-stop(1, #AB2525));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#C54E4E', EndColorStr='#AB2525')";
+}
+.ui-btn-up-r a.ui-link-inherit {
+    color: #fff;
+}
+.ui-btn-hover-r {
+    border: 1px solid #6E0000;
+    background: #B64B4B;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 -1px 1px #000;
+    background-image: -moz-linear-gradient(top, 
+        #D47272, 
+        #B64B4B);
+    background-image: -webkit-gradient(linear,left top,left bottom,
+        color-stop(0, #D47272),
+        color-stop(1, #B64B4B));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#D47272', EndColorStr='#B64B4B')";
+}
+.ui-btn-hover-r a.ui-link-inherit {
+    color: #fff;
+}
+.ui-btn-down-r {
+    border: 1px solid #772222;
+    background: #C54E4E;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 -1px 1px #000;
+    background-image: -moz-linear-gradient(top, #9E3939, #C54E4E);
+    background-image: -webkit-gradient(linear,left top,left bottom,
+        color-stop(0, #9E3939),
+        color-stop(1, #C54E4E));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#9E3939', EndColorStr='#C54E4E')";
+}
+.ui-btn-down-r a.ui-link-inherit {
+    color: #fff;
+}
+.ui-btn-up-r,
+.ui-btn-hover-r,
+.ui-btn-down-r {
+    font-family: Helvetica, Arial, sans-serif;
+    text-decoration: none;
+}
+
+/*
+* jQuery Mobile Framework 1.1.1 1981b3f5ec22675ae47df8f0bdf9622e7780e90e
+* http://jquerymobile.com
+*
+* Copyright 2012 jQuery Foundation and other contributors
+* Dual licensed under the MIT or GPL Version 2 licenses.
+* http://jquery.org/license
+*
+*/
+/* Swatches */
+
+/* A
+-----------------------------------------------------------------------------------------------------------*/
+
+.ui-bar-site {
+	border: 1px solid #B3B3B3 /*{a-bar-border}*/;
+	background: #688eb5 /*{a-bar-background-color}*/;
+	color: #3E3E3E /*{a-bar-color}*/;
+	font-weight: bold;
+	text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 1px /*{a-bar-shadow-radius}*/ #fff /*{a-bar-shadow-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #688eb5 /*{a-bar-background-start}*/), to( #688eb5 /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #688eb5 /*{a-bar-background-start}*/, #688eb5 /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #688eb5 /*{a-bar-background-start}*/, #688eb5 /*{a-bar-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #688eb5 /*{a-bar-background-start}*/, #688eb5 /*{a-bar-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #688eb5 /*{a-bar-background-start}*/, #688eb5 /*{a-bar-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #688eb5 /*{a-bar-background-start}*/, #688eb5 /*{a-bar-background-end}*/);
+}
+.ui-bar-site .ui-link-inherit {
+	color: #3E3E3E /*{a-bar-color}*/;
+}
+
+.ui-bar-site a.ui-link {
+	color: #7cc4e7 /*{a-bar-link-color}*/;
+	font-weight: bold;
+}
+
+.ui-bar-site a.ui-link:visited {
+    color: #2489CE /*{a-bar-link-visited}*/;
+}
+
+.ui-bar-site a.ui-link:hover {
+	color: #2489CE /*{a-bar-link-hover}*/;
+}
+
+.ui-bar-site a.ui-link:active {
+	color: #2489CE /*{a-bar-link-sitective}*/;
+}
+
+.ui-bar-site,
+.ui-bar-site input,
+.ui-bar-site select,
+.ui-bar-site textarea,
+.ui-bar-site button {
+	 font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
+}
+.ui-body-site,
+.ui-overlay-site {
+	border: 1px solid #aaa /*{a-body-border}*/;
+	color: #333333 /*{a-body-color}*/;
+	text-shadow: 0 /*{a-body-shadow-x}*/ 1px /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ #fff /*{a-body-shadow-color}*/;
+	background: #f9f9f9 /*{a-body-background-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9 /*{a-body-background-start}*/), to( #eeeeee /*{a-body-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/);
+}
+.ui-overlay-site {
+	background-image: none;
+	border-width: 0;
+}
+.ui-body-site,
+.ui-body-site input,
+.ui-body-site select,
+.ui-body-site textarea,
+.ui-body-site button {
+	 font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
+}
+.ui-body-site .ui-link-inherit {
+	color: #333333 /*{a-body-color}*/;
+}
+
+.ui-body-site .ui-link {
+	color: #2489CE /*{a-body-link-color}*/;
+	font-weight: bold;
+}
+
+.ui-body-site .ui-link:visited {
+    color: #2489CE /*{a-body-link-visited}*/;
+}
+
+.ui-body-site .ui-link:hover {
+	color: #2489CE /*{a-body-link-hover}*/;
+}
+
+.ui-body-site .ui-link:active {
+	color: #2489CE /*{a-body-link-sitective}*/;
+}
+
+.ui-btn-up-site {
+	border: 1px solid #ccc /*{a-bup-border}*/;
+	background: #bad2e1 /*{a-bup-background-color}*/;
+	font-weight: bold;
+	color: #2F3E46 /*{a-bup-color}*/;
+	text-shadow: 0 /*{a-bup-shadow-x}*/ 1px /*{a-bup-shadow-y}*/ 0 /*{a-bup-shadow-radius}*/ #ffffff /*{a-bup-shadow-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #bad2e1 /*{a-bup-background-start}*/), to( #bad2e1 /*{a-bup-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #bad2e1 /*{a-bup-background-start}*/, #bad2e1 /*{a-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #bad2e1 /*{a-bup-background-start}*/, #bad2e1 /*{a-bup-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #bad2e1 /*{a-bup-background-start}*/, #bad2e1 /*{a-bup-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #bad2e1 /*{a-bup-background-start}*/, #bad2e1 /*{a-bup-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #bad2e1 /*{a-bup-background-start}*/, #bad2e1 /*{a-bup-background-end}*/);
+}
+.ui-btn-up-site:visited,
+.ui-btn-up-site a.ui-link-inherit {
+	color: #2F3E46 /*{a-bup-color}*/;
+}
+.ui-btn-hover-site {
+	border: 1px solid #bbb /*{a-bhover-border}*/;
+	background: #f8faf9 /*{a-bhover-background-color}*/;
+	font-weight: bold;
+	color: #2F3E46 /*{a-bhover-color}*/;
+	text-shadow: 0 /*{a-bhover-shadow-x}*/ 1px /*{a-bhover-shadow-y}*/ 0 /*{a-bhover-shadow-radius}*/ #ffffff /*{a-bhover-shadow-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #f8faf9 /*{a-bhover-background-start}*/), to( #f8faf9 /*{a-bhover-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #f8faf9 /*{a-bhover-background-start}*/, #f8faf9 /*{a-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #f8faf9 /*{a-bhover-background-start}*/, #f8faf9 /*{a-bhover-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #f8faf9 /*{a-bhover-background-start}*/, #f8faf9 /*{a-bhover-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #f8faf9 /*{a-bhover-background-start}*/, #f8faf9 /*{a-bhover-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #f8faf9 /*{a-bhover-background-start}*/, #f8faf9 /*{a-bhover-background-end}*/);
+}
+.ui-btn-hover-site:visited,
+.ui-btn-hover-site:hover,
+.ui-btn-hover-site a.ui-link-inherit {
+	color: #2F3E46 /*{a-bhover-color}*/;
+}
+.ui-btn-down-site {
+	border: 1px solid #bbb /*{a-bdown-border}*/;
+	background: #d6d6d6 /*{a-bdown-background-color}*/;
+	font-weight: bold;
+	color: #2F3E46 /*{a-bdown-color}*/;
+	text-shadow: 0 /*{a-bdown-shadow-x}*/ 1px /*{a-bdown-shadow-y}*/ 0 /*{a-bdown-shadow-radius}*/ #ffffff /*{a-bdown-shadow-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #d0d0d0 /*{a-bdown-background-start}*/), to( #dfdfdf /*{a-bdown-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/);
+}
+.ui-btn-down-site:visited,
+.ui-btn-down-site:hover,
+.ui-btn-down-site a.ui-link-inherit {
+	color: #2F3E46 /*{a-bdown-color}*/;
+}
+.ui-btn-up-site,
+.ui-btn-hover-site,
+.ui-btn-down-site {
+	 font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
+	text-decoration: none;
+}
+
+.header {
+	height: 120px;
+	
+}
+
+
+
+.descriptionform, .description {
+	border: dashed;
+	border-width: 3px;
+	border-color: #688eb5;
+	padding: 5px;
+	margin-top: 10px;
+}
+
+#nav {
+	float: none;
+	background-color:#999 !important;
+}
+
+.ps-toolbar {
+	opacity: 0.8 !important;
+}
+
+.horizwrapper {
+	background-color: #cccccc !important; 
+	border: solid !important; 
+	border-width: 1px !important; 
+}
+
+.error {
+	margin-top: 10px;
+}
+
+.morebutton {
+	margin-top: 30px;
+}
+
+#pinned  {
+    width: 300px;
+}
+
+#pinned ul {
+	margin-left: -40px;
+}
+
+#pinned ul li {
+    margin-right: 5px;
+    width: 220px;
+}
+
+.icons {
+	height: 120px; 
+	width: 400px;
+}
+
+.icon {
+	float: left; 
+	margin-right: 20px; 
+	width: 75px; 
+	height: 98px; 
+	line-height: 0.7em;
+}
+
+#buttonlist {
+	margin-left: -80px;
+}
+
+#image_map_canvas img, 
+#sightings_map_canvas img, 
+#myobservations_map_canvas img,
+#info_map_canvas img,
+#user_observation_map_canvas img,
+#search_location_map_canvas img,
+#search_map_location_canvas img,
+#observationinfo_map_canvas img {
+  max-width: none;
+}
+
+.sightingslist {
+	padding: 10px; 
+	background-color: #e1e1e0; 
+	margin-bottom: 20px; 
+	min-height: 100px;
+}
+
+.observationslist {
+	padding: 10px; 
+	border: solid; 
+	border-width: 1px; 
+	background-color: #F1E8CB; 
+	margin-bottom: 20px;
+}
+
+#checklistform * .hfh-repinst div input  {
+	width: 40px; 
+	margin-right: 10px;
+}
+
+a, a:hover, a:visited, a:active {
+	text-decoration: none;
+}
+

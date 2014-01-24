@@ -1,0 +1,23 @@
+[% meta.title = 'My Account' -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		if (window.location.hash == '#_=_' || window.location.hash == '#') {
+			window.location.hash = '';
+		}
+	[% END -%]
+[% END -%]
+</script>
+[% PROCESS include/html/messages.tt -%]
+<h2>My Account</h2>
+<br />
+<p><a class="btn btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('addObservation')) -%]">Add an observation</a></p>
+<p><a class="btn btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('addObservationChecklist')) -%]">Add observations (Checklist)</a></p>
+<p><a class="btn btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('updateInfo')) -%]">Update my information</a></p>
+[% IF (c.user().has_provider(c.config.Auth.Provider.Default)) %]
+<p><a class="btn  btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('updatePassword')) %]">Change my password</a></p>
+[% END %]
+<p><a class="btn btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('viewObservationMap')) %]">View my map</a></p>
+<p><a class="btn btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('viewObservationsList')) %]">View my observations</a></p>
+<p><a class="btn btn-large" data-role="button" href="[% c.uri_for(c.controller('User').action_for('viewLifeList')) %]">View my lifelist</a></p>

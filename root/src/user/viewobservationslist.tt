@@ -1,0 +1,30 @@
+[% meta.title = 'My Observations' %]
+[% PROCESS include/html/messages.tt -%]
+[% js.files = ('page.user.viewobservationslist') -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var observationsURL = "[% c.uri_for(c.controller('User_REST').action_for('searchUserObservations')) -%]";
+	var status_published = "[% c.config.Observations.Status.Published -%]";
+	var status_unpublished = "[% c.config.Observations.Status.Unpublished -%]";
+	var status_review = "[% c.config.Observations.Status.Review -%]";
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			$.mobile.showPageLoadingMsg();
+			viewUserObservationList();
+			$.mobile.hidePageLoadingMsg();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			viewUserObservationList();
+		});
+	[% END -%]
+[% END -%]
+</script>
+<h2>My Observation List</h2>
+<p><strong>Yellow Background:</strong> In Review</p>
+<p><strong>Red Background:</strong> Unpublished</p>
+<div id="thelist">
+	<ul id="observationlist" class="longobservelist" data-role="listview">
+	</ul>
+</div>

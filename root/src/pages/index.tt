@@ -1,0 +1,64 @@
+[% meta.title = 'Home' %]
+[% IF layout == 'mobile' -%]
+	[%# PLACE MOBILE CONTENT HERE %]
+	<div class="icons">
+		<div class="icon">
+			<a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByName')) -%]"><img src="/static/images/icons/by-name.png"></a>
+		</div>
+		<div class="icon">
+			<a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByLocation')) -%]"><img src="/static/images/icons/by-location.png"></a>
+		</div>
+		<div class="icon">
+			<a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByDescription')) -%]"><img src="/static/images/icons/by-description.png"></a>
+		</div>
+	</div>
+	<div class="icons">
+		<div class="icon">
+			<a href="[% c.uri_for(c.controller('Organisms').action_for('latestOrganismSightings')) -%]"><img src="/static/images/icons/latest-sightings.png"></a>
+		</div>
+		<div class="icon">
+			<a data-dom-cache="true" href="[% c.uri_for(c.controller('User').action_for('viewLifeList')) -%]"><img src="/static/images/icons/life-list.png"></a>
+		</div>
+		<div class="icon">
+			<a href="[% c.uri_for(c.controller('Page').action_for('instructions')) -%]"><img src="/static/images/icons/instructions.png"></a>
+		</div>
+	</div>
+<div style="margin-left: 10px;">
+</div>
+[% ELSIF layout == 'kiosk' -%]
+<div class="intropage">
+<p><a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByName')) -%]"><img src="/static/images/kiosk-findbyname.jpg" align="left"/>
+<div class="maintitle"><h2>[% c.config.Site.organisms -%] By Name</h2>
+Find a [% c.config.Site.organisms_singular.lower -%] by their name.  You can search by either the common name or scientific name.</div></a></p>
+<br clear="all" /><br />
+<p><a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByLocation')) -%]"><img src="/static/images/kiosk-findbylocation.jpg" align="left"/>
+<div class="maintitle"><h2>[% c.config.Site.organisms -%] By Location</h2>
+Find [% c.config.Site.organisms.lower -%] by selecting a given location.  You can either choose the location around this building, type in an address, or select on a map.
+This will show you a map of how likely you are to see a given [% c.config.Site.organisms_singular.lower -%]  in that location.</div></a></p>
+<br clear="all" /><br />
+<p><a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByDescription')) -%]"><img src="/static/images/kiosk-findbydescription.jpg" align="left"/>
+<div class="maintitle"><h2>[% c.config.Site.organisms -%] By Description</h2>
+Find [% c.config.Site.organisms.lower -%] by choosing their traits. You can select multiple traits and the application will show you which [% c.config.Site.organisms_singular.lower -%] 
+you most likely are looking for.</div></a></p>
+<br clear="all" /><br />
+<p><a href="[% c.uri_for(c.controller('Organisms').action_for('viewExampleState')) -%]"><img src="/static/images/kiosk-viewexampletraits.jpg" align="left"/>
+<div class="maintitle"><h2>View Examples of Traits</h2>
+Find [% c.config.Site.organisms -%] by choosing their characteristics. You can select multiple characterstics and the application will show you which [% c.config.Site.organisms_singular -%] 
+you most likely are looking for.</div></a></p>
+<br clear="all" /><br />
+<p><a href="[% c.uri_for(c.controller('Organisms').action_for('latestOrganismSightings')) -%]"><img src="/static/images/kiosk-viewlatestsightings.jpg" align="left"/>
+<div class="maintitle"><h2>Latest Sightings</h2>
+Find all of the latest sightings that users have observed.</div></a></p>
+<br clear="all" />
+</div>
+[% ELSE -%]
+	[%# PLACE DESKTOP/OTHER CONTENT HERE %]
+	<h1>Welcome to iCBug</h1>
+	<p>&nbsp;</p>
+	<p>The iCBug project started off as 
+	the Connecticut Butterfly Atlas Project in 1995. The goal of the Atlas project was to map the distribution of butterfly species in the
+	state.  This site has taken the data produced from the project and digitized it to provide an online user interaction.</p>
+	<p>&nbsp;</p>
+	<p>Through this site you can explore the different butterflies around Connecticut. You can search for them by name, location and description.
+	Once you have found a butterfly you can then add an observation as well as photos of it.</p>
+[% END -%]

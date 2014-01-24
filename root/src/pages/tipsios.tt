@@ -1,0 +1,22 @@
+[% meta.title = 'Instructions for iOS (iPhone, iPad and iPod Touch) Devices' %]
+<h2>Tips for iOS devices</h2>
+<p>&nbsp;</p>
+<h3>Enable Location</h3>
+<p>To enable location services on your iOS device go into the settings tab.  There should be an option for to enable location services.</p>
+<p><span style="font-size: 12px; font-style: italic;">*** Please note: some older iOS devices may not have location capabilities. *** </span></p>
+<p>&nbsp;</p>
+<h3>Adding an [% c.config.name -%] link to your home screen</h3>
+<p><strong>iPhone and iPod Touch</strong></p>
+<p>Click on the arrow button on the bottom of the screen. A helpful bubble appears to show you where to click.  Once you have click the button
+a list of menu options will appear.  Click on Add to Homescreen and now you should get a button on your main screen for fast access.</p>
+<p><strong>iPad (coming soon)</strong></p>
+<p>&nbsp;</p>
+<h3>Uploading images for iOS 5 and lower</h3>
+<p>Unfortunately iOS disables native image uploads in the browser. To upload images from your device you must install the 
+<a href="http://itunes.apple.com/us/app/picup/id354101378?mt=8" target="_blank" rel="external">Picup App</a> from the App Store.
+Once you are on the upload image page for your observation, there will a button which says to choose your file.  This will send you
+the Picup app.  From there you can either use your camera or an existing picture from on your iOS device.  Select your file then 
+click on upload file.  Once this is done you will be taken back to the [% c.config.name -%] site.</p>
+<p><span style="font-size: 12px; font-style: italic;">*** Please note: some older iOS devices may not be compatible with the newest version of the Picup app.  In that case
+please save your images and then either transfer them to your machine or email them and upload them through a desktop computer. *** </span></p>
+<p>&nbsp;</p>

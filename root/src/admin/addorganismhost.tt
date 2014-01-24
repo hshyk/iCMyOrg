@@ -1,0 +1,4 @@
+[% meta.title = 'Add Organism Host' -%]
+<h2>Add Organism Host</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

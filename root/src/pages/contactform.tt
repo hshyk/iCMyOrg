@@ -1,0 +1,7 @@
+[% meta.title = 'Contact Us' %]
+<h2>Contact Us</h2>
+[% PROCESS include/html/messages.tt -%]
+<br /><br />
+<div class="forms">
+	[% form.render %]
+</div>

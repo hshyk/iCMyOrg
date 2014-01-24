@@ -1,0 +1,5 @@
+[% meta.title = 'Add Image to State' %]
+<h2>Add Image to State</h2>
+[% PROCESS include/html/messages.tt -%]
+<img src="[% image.filename -%]/thumb.jpg" />
+[% form.render %]

@@ -1,0 +1,5 @@
+<h2>Delete [% organism.common_name -%]</h2>
+<span class="error">[% status_msg %]</span>
+<p>Please note that deleting this [% c.config.Site.organisms_singular -%] will delete all the observations, images, notes, states attached to it.</p>
+[% form.render %]
+

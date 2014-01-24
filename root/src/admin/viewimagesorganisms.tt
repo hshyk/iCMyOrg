@@ -1,0 +1,27 @@
+[% meta.title = 'View ' _ c.config.Site.organisms _ '\' System Images' %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("list");
+	});
+[% END -%]
+</script>
+<h2>View [% c.config.Site.organisms -%]' System Images</h2>
+[% PROCESS include/html/messages.tt -%]
+<table class="tablesorter" id="list">
+	<thead>  
+		<tr>
+			<th>Scientific Name</th>
+			<th>Common Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH organism IN organisms -%]
+		<tr>
+	        <td><a href="[%  c.uri_for(c.controller('Admin').action_for('viewImagesOrganismByID'), organism.organism_id)%]" />[% organism.scientific_name %]</a></td>
+	        <td>[% organism.common_name %]</td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

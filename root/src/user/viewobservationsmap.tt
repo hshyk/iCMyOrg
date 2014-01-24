@@ -1,0 +1,45 @@
+[% meta.title = 'My Observations Map' %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% PROCESS include/js/mapmarkers.tt -%]
+	[% markercount = 0 -%]
+	var markers = new Array();
+	var observations = new Array();
+	[% FOREACH observation IN observations -%]
+			observations[[% markercount-%]] = new Array();
+			observations[[% markercount-%]]['latitude'] = '[% observation.latitude -%]';
+			observations[[% markercount-%]]['longitude'] = '[% observation.longitude -%]';
+			observations[[% markercount-%]]['type'] = '[% observation.observation_type.observation_name -%]';
+			observations[[% markercount-%]]['date_observed'] = '[% observation.date_observed_display -%]';
+			observations[[% markercount-%]]['location_detail'] = '[% observation.location_detail  | escape_js  -%]';
+			observations[[% markercount-%]]['filename'] = '[% observation.first_image_search(c.config.Site.characters.defaultcharactertype).filename -%]';
+			observations[[% markercount-%]]['source'] = '[% observation.source  | escape_js  -%]';
+			observations[[% markercount-%]]['common_name'] = '[% observation.organism.common_name  | escape_js  -%]';
+			observations[[% markercount-%]]['observation_id'] = '[% observation.observation_id -%]';
+			observations[[% markercount-%]]['url'] = '[% c.uri_for(c.controller('User').action_for('observationInfo'), observation.observation_id) -%]';
+		[% markercount = markercount + 1 -%]
+	[% END -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadSightingsPage();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadSightingsPage();
+		});
+	[% END -%]
+
+	function loadSightingsPage() {
+		var map = createMap('#myobservations_map_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+		//createMap_setMapBounds('#myobservations_map_canvas');
+		locationSelector_addAllMarkers('#myobservations_map_canvas',observations);
+		google.maps.event.trigger(map, 'resize');	
+	}
+[% END -%]
+</script>
+<h2>My Observations Map</h2>
+<br /><br />
+<div style="position: relative;">
+<div id="myobservations_map_canvas" style="height: 300px; width: 100%;"></div>
+</div>" 

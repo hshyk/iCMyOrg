@@ -1,0 +1,55 @@
+[% meta.title = 'Find ' _ c.config.Site.organisms _ ' By Name' %]
+[% IF layout == "mobile" -%]
+<link rel="stylesheet" type="text/css" href="/css/iscroll.vertical.css" media="screen" />
+[% END -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var page = 1;
+	var moreExists = true;
+	var myScroll,
+		pullUpEl, pullUpOffset
+		generatedCount = 0;
+	
+	var infoURL = "[% c.uri_for(c.controller('Organisms_REST').action_for('searchOrganismsByName')) -%]";
+	var observationlist = false;
+	
+	function getPostData() {
+		return { scientific_name : $('#scientific_name').val(), common_name: $('#common_name').val(), page: page  }
+	}
+	
+	function noSelectionErrors() {
+		return true;
+	}
+	[% IF layout == 'mobile' -%]
+
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			createOrganismScroll();
+			createOrganismScroll_getForm("/[% c.request.path -%]");
+			if (createOrganismScroll_getCachedList("/[% c.request.path -%]")) {
+			}
+			else {
+				$('#wrapper').attr('style', 'height: 0px; width: 70%');
+			}
+			
+			photoSwipe_restartPhotoSwipe();
+		});
+		
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pagebeforehide',function(){
+			createOrganismScroll_saveCachedList("/[% c.request.path -%]");
+			delete myScroll;
+			createOrganismScroll_saveForm("/[% c.request.path -%]");
+		});		
+	[% ELSE -%]
+		$(document).ready( function() {
+			createOrganismList();
+		});
+	[% END -%]
+[% END -%]
+</script>
+<h2>Find [% c.config.Site.organisms -%] By Name</h2>
+<div class="forms">
+	[% form.render %]
+</div>
+<a id="list"></a>
+

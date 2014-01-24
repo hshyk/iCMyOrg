@@ -1,0 +1,4 @@
+[% meta.title = 'Edit ' _  user.username _ '\'s Information' %]
+<h2>View User [% user.username -%]'s information </h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

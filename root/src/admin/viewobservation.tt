@@ -1,0 +1,14 @@
+[% meta.title = 'View Observation' -%]
+<h2>View Observation</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]
+<br />
+[% IF (observation.observation_id) -%]
+	<h3><a href="[% c.uri_for(c.controller('Admin').action_for('addImageToObservations'), observation.observation_id) %]" />Add images to this observation</a></h3>
+	<br />
+	[%	FOREACH photo IN photos -%]
+		<img src="[% photo.filename %]/thumb.jpg" /><br />
+		<a href="[% c.uri_for('/admin/delete/image-observation', photo.image_id)%]">Delete this image</a>
+		<br /><br />
+	[% END -%]
+[% END -%]

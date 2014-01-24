@@ -1,0 +1,18 @@
+[% META title = 'View all Characters' %]
+<h2>View all Characters</h2>
+<table class="tablesorter" id="list">
+	<thead>
+		<tr>
+			<th>Character Name</th>
+			<th>Character Type</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH character IN characters -%]
+		<tr>
+	        <td><a href="[% c.uri_for(c.controller('Admin').action_for('viewCharacterByID'), character.character_id) %]" />[% character.character_name %]</a></td>
+	        <td>[% character.character_type.character_type %]</td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

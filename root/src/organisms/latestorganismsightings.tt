@@ -1,0 +1,72 @@
+[% meta.title = 'Latest Sightings' %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% PROCESS include/js/mapmarkers.tt -%]
+	[% markercount = 0 -%]
+	var markers = new Array();
+	var photoInfo = new Array();
+	photoInfo['[% c.config.Site.organisms_singular -%]'] = new Array();
+	[% markercount = 0 -%]
+	var observations = new Array();
+	[% FOREACH observation IN observations -%]
+			observations[[% markercount-%]] = new Array();
+			observations[[% markercount-%]]['latitude'] = '[% observation.latitude -%]';
+			observations[[% markercount-%]]['longitude'] = '[% observation.longitude -%]';
+			observations[[% markercount-%]]['type'] = '[% observation.observation_type.observation_name | escape_js  -%]';
+			observations[[% markercount-%]]['date_observed'] = '[% observation.date_observed_display -%]';
+			observations[[% markercount-%]]['location_detail'] = '[% observation.location_detail | escape_js  -%]';
+			observations[[% markercount-%]]['filename'] = '[% observation.first_image.filename -%]/thumb.jpg';
+			observations[[% markercount-%]]['source'] = '[% observation.source | escape_js -%]';
+			observations[[% markercount-%]]['common_name'] = '[% observation.organism.common_name | escape_js  -%]';
+			observations[[% markercount-%]]['observation_id'] = '[% observation.observation_id -%]';
+			observations[[% markercount-%]]['url'] = '[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]';
+			photoInfo['[% c.config.Site.organisms_singular -%]'][[%  observation.first_image.image_id -%]] = '[% observation.organism.common_name | escape_js -%]';
+			[% IF observation.user_organism -%] 
+			observations[[% markercount-%]]['observed_by'] = '[% observation.user_organism.user.username | escape_js  -%]';
+			[% END -%]
+		[% markercount = markercount + 1 -%]
+	[% END -%]
+	
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadSightingsPage();
+			photoSwipe_restartPhotoSwipe();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadSightingsPage();
+		});
+	[% END -%]
+	
+	function loadSightingsPage() {
+		var map = createMap('#sightings_map_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+		locationSelector_addAllMarkers('#sightings_map_canvas', observations);	
+		photoSwipe();
+		setTimeout(function(){
+	        var map = $('#sightings_map_canvas').gmap('get', 'map');
+			map.setZoom(8);
+	    }, 100);	
+	}
+[% END -%]
+</script>
+<h2>Latest [% c.config.Site.organisms -%] Sightings</h2>
+<p>&nbsp;</p>
+<p>This is a map of the latest [% c.config.Site.organisms.lower -%] sightings by our users.</p>
+<div class="observationsmap" style="position: relative;">
+	<div id="sightings_map_canvas" class="gmap" style="height: 300px; width: 100%;"></div>
+</div>
+<p>&nbsp;</p>
+[% FOREACH observation IN observations -%]
+	<div class="sightingslist" style="">
+		<div id="Gallery" style="float: left;">
+			<a data-ajax="false" photoid="[% observation.first_image.image_id -%]" href="[% observation.first_image.filename -%]/img-[% imagetouse -%].jpg"><img src="[% observation.first_image.filename -%]/thumb.jpg" imagetype="[% c.config.Site.organisms_singular -%]" /></a>
+		</div>
+		<div style="margin-left: 110px;">
+		<p><strong><a href="[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]" />[% observation.location_detail | escape_js  -%]</a></strong></p>
+		<p><strong>[% c.config.Site.organisms_singular -%]:</strong> <a href="[% c.uri_for(c.controller('Organisms').action_for('viewOrganismInfo'), observation.organism.organism_url) -%]" />[% observation.organism.common_name -%]</a></p>
+		<p><strong>Observed on:</strong> [% observation.date_observed_display -%]</p>
+		<p><strong>Observed by:</strong> <a href="[% c.uri_for(c.controller('Organisms').action_for('viewUserOrganismInfo'), observation.organism.organism_url, observation.user_organism.user.provider_name_lower, observation.user_organism.user.authid) %]">[% observation.user_organism.user.username | escape_js  -%]</a>
+		</div>
+	</div>
+[% END -%]

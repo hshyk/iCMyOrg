@@ -1,0 +1,156 @@
+[% meta.title = 'Find ' _  c.config.Site.organisms _' By Description' %]
+[% IF layout == "mobile" -%]
+	[% css.files = ('iscroll.vertical') -%]
+[% END -%]
+[% js.files = ('page.' _  c.config.Site.organisms.lower _'.searchbydescription') -%]
+<script language="javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var page = 1;
+	var moreExists = true;
+	var myScroll,
+		pullUpEl, pullUpOffset
+		generatedCount = 0;
+	
+	photoInfo['organism'] = new Array();
+	[% IF character_type_id.defined -%]
+	var character_type_id = [% character_type_id | html_entity %];
+	[% END -%]
+	
+	[% IF defined(habitat_id) -%]
+		var habitat_id = [% habitat_id | html_entity %];
+	[% END -%]
+	
+	var characters = {
+						[% x = 0 -%]
+						[% FOR characters IN characteristics -%]
+						[% IF (x != characters.character_type_id) -%]
+						   [% IF (x != 0) -%] },[% END %]
+							"[% characters.character_type_id %]"
+							[% x = x + 1 -%]: {
+						[% END -%]"[% characters.character_id -%]" : "[% characters.character_name -%]",
+		    			[% END -%]	} 
+		    			};
+	var userSelect = new Array();
+	[% total = descriptionID %]
+	[% WHILE total > 0 %]
+		
+		[% characters = "characters${total}" -%]
+		[% IF defined(characters)  -%]
+		[% ELSE -%]
+			[% ${characters} = 0 -%]
+		[% END -%]     
+		userSelect["[% characters %]"] = [% searchitems.${characters} %]+'';
+	
+		
+		[% states = "states${total}" -%]
+		[% IF defined(states)  -%]
+		[% ELSE -%]
+			[% ${states} = 0 -%]
+		[% END -%]     
+		userSelect["[% states %]"] = [% searchitems.${states} %]+'';
+		
+		[% statevalue = "statevalue${total}" -%]
+		[% IF defined(statevalue)  -%]
+		[% ELSE -%]
+			[% ${statevalue} = '""' -%]
+		[% END -%]     
+		userSelect["[% statevalue %]"] = [% searchitems.${statevalue} %]+'';
+		
+		[% total = total - 1 %]
+	[% END %]
+	var photoInfo = new Array();
+	photoInfo['organism'] = new Array();
+	[% PROCESS include/js/mapmarkers.tt -%]
+	var infoURL = "[% c.uri_for(c.controller('Organisms_REST').action_for('searchOrganismsByDescription')) -%]";
+	var stateURL = "[% c.uri_for(c.controller('Organisms_REST').action_for('searchStatesByCharacter')) -%]";
+	var observationlist = true;
+	var description_id;
+	
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pagebeforehide',function(){
+			createOrganismScroll_saveCachedList("/[% c.request.path -%]");
+			delete myScroll;
+			createOrganismScroll_saveForm("/[% c.request.path -%]");
+			$('div:jqmData(url="/[% c.request.path -%]")').die();
+		});
+		
+		
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			description_id = 1;
+			pageLoad = true;
+			loadDescriptionPage();
+			locationSelector();
+			$.cookie('searchresults', $.cookie('searchresults/[% c.request.path -%]'));
+			createOrganismScroll_getForm("/[% c.request.path -%]");
+			showLoadedItems();
+			createOrganismScroll();
+			if (createOrganismScroll_getCachedList("/[% c.request.path -%]")) {
+			}
+			else {
+				$('#wrapper').attr('style', 'height: 0px; width: 70%');
+			}
+			
+			locationSelector_showOptions('#observed_location', '#search_map_location_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+			
+		});
+	[% ELSE -%]
+		$(document).ready(function() {
+			description_id = 1;
+			pageLoad = true;
+			loadDescriptionPage();
+			locationSelector();
+			locationSelector_showOptions('#observed_location', '#search_map_location_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+			showLoadedItems();
+			createOrganismList();
+		});
+	[% END -%]
+[% END -%]
+</script>
+<h2>Search [% c.config.Site.organisms -%] by Description</h2>
+<form id="search" method="post"  data-ajax="false">
+	<p>&nbsp;</p>
+	<div class="forms descriptionform" style="height: 80px;">
+		[% form.field('character_type_id').render %]
+	</div>
+	[% IF usehabitat == 1 -%]
+	<div class="forms descriptionform" style="height: 80px;">
+		[% form.field('habitat_id').render %]
+	</div>
+	[% END -%]
+	[% IF usedate == 1 -%]
+	<div id="observed_date" class="forms descriptionform">
+		<div id="observed_daydiv">[% form.field('observed_day').render %]</div><br />
+		<div class="dayobserved">
+			[% form.field('day').render %]
+			[% form.field('month').render %]
+		</div>
+		<br clear="all" />
+	</div>
+	[% END -%]
+	<div class="forms descriptionform" >
+	<div>[% form.field('observed_location').render %]</div>
+		<div class="locationobserved">
+			[% form.field('address').render %]
+		</div>
+	</div>
+	<div class="forms" style="padding-top: 40px;">
+		<div class="all_descriptions">
+		</div>
+		<br />
+		<div id="searchDescription">
+			<a class="btn" data-role="button" data-theme="a" id="description_add" href="javascript:void(0);">Add another description</a>
+			<br />
+			<a class="btn" data-role="button" data-theme="b" id="description_remove" style="display:none;" href="javascript:void(0);">Remove last added description</a><br />
+			<input type="submit" value="Search" id="submit" name="submit">
+		</div>
+	</div>
+[% form.field('latitude').render %]
+[% form.field('longitude').render %]
+</form>
+
+<a id="list"></a>
+<br clear="all" /><br />
+<div style="position: relative;">
+<div id="search_location_map_canvas" style="width: 100%;"></div>
+</div>

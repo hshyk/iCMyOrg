@@ -1,0 +1,6 @@
+[% meta.title = 'Edit Host Image' %]
+<h2>Edit Image</h2>
+<br /><br />
+[% PROCESS include/html/messages.tt -%]<br />
+<img src="[% image.filename -%]/thumb.jpg" />
+[% form.render %]

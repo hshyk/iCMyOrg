@@ -1,0 +1,43 @@
+[% meta.title = 'My Life List' -%]
+
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadUserLifeListPage();
+		});
+		
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadUserLifeListPage();
+		});
+	[% END -%]
+	
+	function loadUserLifeListPage() {
+		setFacebookShare('.fb-share', '[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'), user.provider.provider_name, user.username) -%]');
+	}
+[% END -%]
+</script>
+
+<h2>My Life List</h2>
+[% PROCESS include/html/messages.tt -%]
+Your life list keeps a record of every [% c.config.Site.organisms_singular | lower -%] species that you have seen. You can add observations, then upload pictures and write notes about the
+observations.  If you wish, your observations can be shared with the online public.
+<p>&nbsp;</p>
+You have seen [% (usercount / totalcount) * 100 FILTER format('%02.2f') -%]% of [% c.config.Site.organisms -%]. [% usercount -%] out of [% totalcount -%] [% c.config.Site.organisms -%] seen.
+<p>&nbsp;</p>
+<div class="sharelinks">
+	<span class="fb-share"></span>
+	<a href="https://twitter.com/share" class="twitter-share-button" data-url="[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'), user.get_primary_provider_system_name, user.get_primary_system_name) -%]" data-text="See [% user.username -%]'s [% c.config.Site.organisms_singular -%] Life List!">Tweet</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="http://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+<br /><br />
+<ul class="lifelistview" data-role="listview" data-theme="g">
+[% FOREACH observedorganism IN organisms -%]
+<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="btn ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up-c" style="height: 100px; float: none; ">
+	<a class="ui-link-inherit" href="[% c.uri_for('/user/lifelist/name', observedorganism.organism.organism_url)%]" /><img class="ui-li-thumb" src="[% observedorganism.organism.default_image.filename -%]/thumb.jpg" /><h3 class="ui-li-heading">[%observedorganism.organism.common_name | html %]</h3>
+	</a>
+</li>
+[% END -%]
+</ul>

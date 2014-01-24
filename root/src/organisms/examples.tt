@@ -1,0 +1,97 @@
+[% meta.title = 'View Example Images of States' %]
+[% js.files = ('page.' _  c.config.Site.organisms.lower _'.viewstatesimages') -%]
+<script language="javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var page = 1;
+	var characters = {
+						[% x = 0 -%]
+						[% FOR characters IN characteristics -%]
+						[% IF (x != characters.character_type_id) -%]
+						   [% IF (x != 0) -%] },[% END %]
+							"[% characters.character_type_id %]"
+							[% x = x + 1 -%]: {
+						[% END -%]"[% characters.character_id -%]" : "[% characters.character_name -%]",
+		    			[% END -%]	} 
+		    			};
+	var userSelect = new Array();
+	[% total = descriptionID %]
+	[% WHILE total > 0 %]
+		
+		[% characters = "characters${total}" -%]
+		[% IF defined(characters)  -%]
+		[% ELSE -%]
+			[% ${characters} = 0 -%]
+		[% END -%]     
+		userSelect["[% characters %]"] = [% searchitems.${characters} %]+'';
+	
+		
+		[% states = "states${total}" -%]
+		[% IF defined(states)  -%]
+		[% ELSE -%]
+			[% ${states} = 0 -%]
+		[% END -%]     
+		userSelect["[% states %]"] = [% searchitems.${states} %]+'';
+		
+		[% statevalue = "statevalue${total}" -%]
+		[% IF defined(statevalue)  -%]
+		[% ELSE -%]
+			[% ${statevalue} = '""' -%]
+		[% END -%]     
+		userSelect["[% statevalue %]"] = [% searchitems.${statevalue} %]+'';
+		
+		[% total = total - 1 %]
+	[% END %]
+	
+	
+	var photoInfo = new Array();
+	photoInfo['organism'] = new Array();
+	
+	var observationlist = false;
+	
+	var infoURL = "[% c.uri_for(c.controller('Organisms_REST').action_for('searchExamplesStates')) -%]";
+	var stateURL = "[% c.uri_for(c.controller('Organisms_REST').action_for('searchStatesByCharacter')) -%]";
+	function getPostData() {
+		return { state_id : $('#state_id').val(), page: page  }
+	}
+	
+	function noSelectionErrors() {
+		return true;
+	}
+	
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pagebeforehide',function(){
+			createOrganismScroll_saveCachedList("/[% c.request.path -%]");
+			delete myScroll;
+			$('div:jqmData(url="/[% c.request.path -%]")').die();
+		});
+		
+		
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			description_id = 1;
+			pageLoad = true;
+			loadExamplesPage();
+			createOrganismScroll();
+			if (createOrganismScroll_getCachedList("/[% c.request.path -%]")) {
+			}
+			else {
+				$('#wrapper').attr('style', 'height: 0px; width: 70%');
+			}
+			
+			photoSwipe_restartPhotoSwipe();
+		
+		});
+	[% ELSE -%]
+		$(document).ready(function() {
+			loadExamplesPage();
+			createOrganismList();
+	
+		});
+	[% END -%]
+[% END -%]
+</script>
+<h2>View images of characterstics</h2>
+<div class="forms">
+[% form.render -%]
+</div>
+<a id="list"></a>

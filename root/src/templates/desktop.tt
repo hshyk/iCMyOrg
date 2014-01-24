@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="[% c.uri_for("/static/images/favicon.ico") -%]" type="image/x-icon">
+	<title>[% meta.title _ " - " _ c.config.name %]</title>
+	<meta name="keywords" content="[% meta.keywords -%]" />
+	<meta name="description" content="[% meta.description -%]" />
+	[% IF metanoindex.defined -%]
+	<meta name="robots" content="noindex, nofollow" />
+	[% END -%]
+	[% IF (template.name == 'pages/index.tt') -%]
+		[% IF c.config.Webmaster.Google.enabled -%]
+	<meta name="google-site-verification" content="[% c.config.Webmaster.Google.key -%]" />
+		[% END -%]
+		[% IF c.config.Webmaster.Bing.enabled -%]
+	<meta name="msvalidate.01" content="[% c.config.Webmaster.Bing.key -%]" />
+		[% END -%]
+	[% END -%]
+	<meta property="og:title" content="[% meta.opengraph.title -%]" />
+	<meta property="og:description" content="[% meta.opengraph.description -%]" />
+	<meta property="og:image" content="[% meta.opengraph.image -%]" />
+	<meta property="og:site_name" content="[% c.config.name -%]" />
+	<meta property="og:url" content="[% meta.opengraph.url -%]" />
+	<link rel="stylesheet" type="text/css" href="[% c.uri_for("/css/desktop.css") -%]" />
+	[% IF css.files.defined -%]
+		[% FOREACH path IN css.files -%]
+	<link rel="stylesheet" type="text/css" href="[% c.uri_for("/css/" _ path _ ".css") -%]" />
+		[% END -%]
+	[% END -%]
+	<script type="text/javascript">
+	[% USE Filter.Minify.JavaScript.XS -%]
+	[% FILTER minify_js -%]
+		var site = "desktop";
+		var imagetouse = "web";
+		var usesocial = true;
+	[% END -%]
+	</script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="[% c.uri_for("/js/desktop.js") -%]" ></script>
+	[% IF js.files.defined -%]
+		[% FOREACH path IN js.files -%]
+	<script type="text/javascript" src="[% c.uri_for("/js/" _ path _ ".js") -%]"  ></script>
+		[% END -%]
+	[% END -%]
+	<!--[if lt IE 9]>
+		<script src="[% c.uri_for("/js/html5.js") -%]"></script>
+	<![endif]-->
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script type="text/javascript">
+	[% USE Filter.Minify.JavaScript.XS -%]
+	[% FILTER minify_js -%]
+		window.fbAsyncInit = function () {
+			FB.init({ appId: '[% c.config.OAuth.facebook.app_id -%]', status: true, cookie: true, xfbml: true });
+				function postToFeed() {
+	
+			        // calling the API ...
+			        var obj = {
+			          method: 'feed',
+			          link: 'https://developers.facebook.com/docs/reference/dialogs/',
+			          picture: 'http://fbrell.com/f8.jpg',
+			          name: 'Facebook Dialogs',
+			          caption: 'Reference Documentation',
+			          description: 'Using Dialogs to interact with users.'
+			        };
+			
+			        function callback(response) {
+			          document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+			        }
+			
+			        FB.ui(obj, callback);
+			      }
+	        };
+	        (function () {
+	            var e = document.createElement('script');
+	            e.type = 'text/javascript';
+	            e.src = document.location.protocol +
+	            '//connect.facebook.net/en_US/all.js';
+	            e.async = true;
+	            document.getElementById('fb-root').appendChild(e);
+	        } ());
+	        (function() {
+		        var twitterScriptTag = document.createElement('script');
+		        twitterScriptTag.type = 'text/javascript';
+		        twitterScriptTag.async = true;
+		        twitterScriptTag.src = 'http://platform.twitter.com/widgets.js';
+		        var s = document.getElementsByTagName('script')[0];
+		        s.parentNode.insertBefore(twitterScriptTag, s);
+			})();
+	[% END -%]
+	</script>
+	<div id="header">
+		<div id="headercontent">
+	    	<img src="[% c.uri_for('/static/images/header.jpg') -%]" width="936" height="303" />
+		</div>
+	</div>
+	<div id="contentarea">
+		<div id="contentblock">
+	    	<div id="content">
+	        	[% content %]	
+	        </div>
+	         <div id="footer">
+	         	<div style=" padding-left: 10px;">
+					[%# FOOTER GOES HERE -%]
+					
+			</div>
+		</div> 
+		<div id="navigation">
+	        <ul>
+	            <li><a href="[% c.uri_for(c.controller('Pages').action_for('index')) -%]" title="Home">Home</a></li>
+				[% IF c.user() %]
+					<li><a href="[% c.uri_for(c.controller('User').action_for('index')) -%]" title="My Account">My Account</a></li>
+					[% IF c.check_user_roles('Admin') %]
+						<li><a href="[% c.uri_for(c.controller('Admin').action_for('index')) -%]" title="Admin">Admin</a></li>
+					[% END %]
+					[% IF c.check_any_user_role('Admin', 'Reviewer') %]
+						<li><a href="[% c.uri_for(c.controller('Review').action_for('index')) -%]" title="Review">Review Pending Observations</a></li>
+					[% END %]
+					<li><a href="[% c.uri_for(c.controller('User').action_for('logout')) -%]" title="Logout">Logout</a></li>
+				[% ELSE %]
+					<li><a href="[% c.uri_for(c.controller('Authentication').action_for('login')) -%]" title="Login">Login</a></li>
+					<li><a href="[% c.uri_for(c.controller('Authentication').action_for('register')) %]" title="Register">Register</a></li>
+				[% END %]
+				<li><a href="[% c.uri_for(c.controller('Organisms').action_for('index')) -%]" title="Find [% c.config.Site.organisms -%]">Find [% c.config.Site.organisms -%]</a></li>
+				<li><a href="[% c.uri_for(c.controller('Organisms').action_for('latestOrganismSightings')) -%]" title="Latest Sightings">Latest Sightings</a></li>
+				<li><a href="[% c.uri_for(c.controller('Pages').action_for('instructions')) -%]" title="Instructions">Instructions</a></li>
+				<li><a href="[% c.uri_for(c.controller('Pages').action_for('contactUs')) -%]" title="Contact Us">Contact Us</a></li>
+				<li><a href="[% c.uri_for(c.controller('Pages').action_for('about')) -%]" title="About">About</a></li>
+				<li><a href="[% c.uri_for(c.controller('Pages').action_for('changeLayout'),'tablet') -%]" rel="nofollow" title="Tablet Site">Tablet Site</a></li>
+				<li><a href="[% c.uri_for(c.controller('Pages').action_for('changeLayout'),'mobile') -%]" rel="nofollow" title="Mobile Site">Mobile Site</a></li>
+	        </ul>
+		</div>
+	</div>
+	<div class="modalload"></div>
+[% IF c.config.GoogleAnalytics.enabled -%]
+	<script type="text/javascript">
+	[% USE Filter.Minify.JavaScript.XS -%]
+	[% FILTER minify_js -%]
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '[% c.config.GoogleAnalytics.analytics_id -%]']);
+	  _gaq.push(['_trackPageview']);
+	  _gaq.push(['_setCustomVar',1,'Layout','Desktop',1]);
+	
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+	[% END -%]
+	</script>
+[% END -%]
+</body>
+</html>

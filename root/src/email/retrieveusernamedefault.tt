@@ -1,0 +1,17 @@
+<table class="w580" border="0" cellpadding="0" cellspacing="0" width="580">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p class="article-title" align="left"><singleline label="Title">Username Retrieval</singleline></p>
+                                    <div class="article-content" align="left">
+                                        <multiline label="Description"><p>There has been a username retrieval request for your user on [% c.config.name -%].</p>
+										<p>Your username is [% username -%].</p>
+										</multiline>
+<p>If this is in error please contact us at [% c.config.Email.reply -%]</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" height="10" width="580"></td></tr>
+                        </tbody></table>
+
+
+

@@ -1,0 +1,267 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+html, body, div, span, applet, object, iframe,
+blockquote, pre,
+abbr, acronym, address, big, cite, code,
+del, dfn, img, ins, kbd, q, s, samp,
+small, strike, tt, var,
+center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+caption, article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/***************************
+The Body of the Page
+***************************/
+
+/* General HTML Body Settings */
+html,body{
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	height:100%;
+	min-width:936px;
+	background-color: #688eb5;
+	line-height: 20px;
+} 
+
+#header {
+	height: 303px;		
+}
+
+#headercontent, #contentarea {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0;
+	margin-left: auto;
+	margin-right: auto;
+	width: 936px;		
+}
+
+#navigation {
+	width: 200px;
+	margin-left: 76px;
+	padding-top: 18px;
+}
+
+#navigation li {
+	list-style: none;
+	margin-bottom: 18px;
+}
+
+
+#navigation li a {
+	color: #d0e5be;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#contentblock {
+	position: absolute;
+	width:  542px;
+	background-color: #d0e5be;
+	margin-top: 0px;
+	margin-left: 237px;
+	min-height: 400px;
+}
+
+#content {
+	padding: 10px;	
+	font-family: Verdana, Geneva, sans-serif;
+	overflow:auto;
+}
+
+#content h1, #content h2, #content h3, #content h4 {
+	margin-bottom: 10px;
+	color: #688eb5;
+}
+
+
+#footer {
+	background-color: #d0e5be;
+	width:  542px;
+	height: 200px; 
+	margin-top: 50px;
+}
+
+.forms {
+	border: solid;
+	border-width: 1px;
+	padding: 10px;
+	background-color: #b1cae9;
+}
+
+.ui-link-inherit {
+	text-decoration: none !important;
+}
+
+.ui-li-heading{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #000;
+	margin-bottom: 0px;
+}
+
+.ui-li-desc{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #000;
+	padding-left: 10px;
+	font-style: italic;
+}
+
+.ps-toolbar {
+	opacity: 0.8 !important;
+}
+
+#image_map_canvas img, 
+#sightings_map_canvas img, 
+#myobservations_map_canvas img,
+#info_map_canvas img,
+#user_observation_map_canvas img,
+#search_location_map_canvas img,
+#search_map_location_canvas img,
+#observationinfo_map_canvas img {
+  max-width: none;
+}
+
+.lifelistview {
+	list-style: none;	
+}
+
+.btn {
+	width: 200px;	
+}
+
+li.btn * h3 {
+    line-height: 1.2em;
+}
+
+#wrapper {
+	margin-top: 20px;	
+}
+
+#thelist li {
+    margin-right: 10px;
+    min-height: 100px;
+    margin-bottom: 10px;
+    width: 220px;
+}
+
+#pinned  {
+    width: 300px;
+}
+
+#pinned ul li {
+    margin-right: 5px;
+    width: 220px;
+}
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modalload {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('/static/images/desktop-loader.gif')
+                50% 50%
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modalload {
+    display: block;
+}
+
+.message {
+	background-color: #98ff6f;
+    border: medium solid;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.error_head_msg {
+    background-color: #F38585;
+    border: medium solid;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.error_message {
+    color: #8E0000;
+}
+
+.ps-active {
+	overflow: hidden;	
+}
+
+.sharelinks {
+	margin-top: 10px;
+}
+
+.sharelinks iframe {
+	margin-top: -5px;	
+}
+
+.description {
+	margin-bottom: 20px;
+}
+
+.sightingslist {
+	padding: 10px; 
+	background-color: #f4f3f0; 
+	margin-bottom: 20px; 
+	min-height: 100px;
+}
+
+.observationslist {
+	padding: 10px; 
+	border: solid; 
+	border-width: 1px; 
+	background-color: #F1E8CB; 
+	margin-bottom: 20px;
+}
+
+#checklistform * .hfh-repinst div {
+	float: left;
+}
+
+#checklistform * .hfh-repinst div input  {
+	width: 40px; 
+	margin-right: 10px;
+}
+
+a, a:hover, a:visited, a:active {
+	text-decoration: none;
+}

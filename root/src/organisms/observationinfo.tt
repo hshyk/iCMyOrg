@@ -1,0 +1,75 @@
+[% titleinfo = '' -%]
+[% metanoindex = 1 -%]
+
+[% IF observation.observation_type.observation_name == c.config.Site.observationtypes.user.name -%]
+	[% titleinfo = observation.user_organism.users.username _ '\'s observation - ' | html-%]
+[% END -%]
+
+[% meta.title = titleinfo  _ observation.location_detail | html -%]
+[% meta.opengraph.title = 'View My ' _  c.config.Site.organisms _ '  Observation - ' _ observation.location_detail | html -%]
+[% meta.opengraph.image = c.uri_for(observation.first_image.filename) _ '/img-mobile.jpg' -%]
+[% meta.opengraph.url = c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadObservationInfoPage();
+			photoSwipe_restartPhotoSwipe();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadObservationInfoPage();
+		});
+	[% END -%]
+	function loadObservationInfoPage() {
+		$('#observationinfo_map_canvas').gmap({'center': new google.maps.LatLng(41.6000,-72.7000)}).bind('init', function(ev, map) {
+			var icon = '[% c.uri_for(c.config.Site.observationtypes.user.icon)-%]'		
+			$('#observationinfo_map_canvas').gmap('addMarker', {'position': '[% observation.latitude -%],[% observation.longitude -%]', 'icon': icon,  'bounds': true,});
+			//$('#observationinfo_map_canvas').gmap('option', 'zoom', 8);
+			createMap_SetZoomTimer('#observationinfo_map_canvas', 8);
+		});
+		photoSwipe();
+		setFacebookShare('.fb-share', '[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]');
+		setTwitterTweetButton('.twitter-tweet', '[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]',
+			"View My [% c.config.Site.organisms_singular -%] -  [% observation.location_detail | html  %]");
+			
+	}
+[% END -%]
+</script>
+<h2>Observation of <a href="[% c.uri_for(c.controller('Organisms').action_for('viewOrganismInfo'), observation.organism.organism_url)-%]">[% observation.organism.common_name -%]</a></h2>
+<img src="[% c.uri_for(observation.organism.default_image.filename) -%]/thumb.jpg" />
+<div class="sharelinks">
+	<span class="fb-share"></span>
+	<span class="twitter-tweet"></span>
+</div>
+<h3>[% observation.location_detail | html %]</h3>
+<p><strong>Date Observed:</strong> [% observation.date_observed_display  %]</p>
+<p><strong>Number Seen:</strong> [% observation.number_seen  %]</p>
+<p><strong>Type:</strong> [% observation.observation_type.observation_name  %]</p>
+[% IF observation.user_organism.user -%]
+<p><strong>Observed By:</strong> <a href="[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'), observation.user_organism.user.provider.provider_name, observation.user_organism.user.username) -%]">[% observation.user_organism.user.username -%]</a></p>
+[% END -%]
+[% IF observation.observationimages_rs.count -%]
+	<div id="Gallery">
+	<strong>Images</strong> <br />
+	[% FOREACH image IN observation.observationimages -%]
+			<a data-ajax="false" photoid="[% image.image_id -%]" href="[% image.filename -%]/img-[% imagetouse -%].jpg"><img src="[% image.filename -%]/thumb.jpg" imagetype="organism" /></a>
+	[% END -%]
+	</div>
+[% END -%]
+<p>&nbsp;</p>
+[% IF observation.observationnotes_rs.count -%]
+	<strong>Notes:</strong><br />
+	<div style="padding: 10px; border: solid; border-width: 1px; margin-bottom: 20px;">
+	<ul>
+	[% FOREACH note IN observation.observationnotes -%]
+		<li style="margin-left: 10px;">[% note.notes | html -%]</li>
+	[% END -%]
+	</div>
+	</ul>
+[% END -%]
+
+<div class="observationsmap" style="position: relative;">
+<div id="observationinfo_map_canvas" style="width: 100%; height: 300px;"></div>
+</div>

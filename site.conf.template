@@ -1,0 +1,201 @@
+name	SITE_NAME
+<Site>
+	organisms	PLURAL_ORGANISM_NAME
+	organisms_singular	SINGULAR_ORGANISM_NAME
+	<host>
+		enabled	HOST_ENABLED
+		name	PLURAL_HOST_NAME
+		name_singular	SINGULAR_HOST_NAME
+	</host>
+	<map>
+		latitude	MAP_LATITUDE
+		longitude	MAP_LONGITUDE
+		zoom	MAP_ZOOM
+	</map>
+	<characters>
+		defaultcharactertype	DEFAULT_CHARACTER_TYPE
+		<specific>
+			<habitat>
+				enabled	HABITAT_ENABLED
+				character_name	HABITAT_CHARACTER
+				<types>
+					# Character type to search with habitat if enabled.  Should be followed by the number 1.
+					ALL_HABITATS
+				</types>
+			</habitat>
+			<day_of_year>
+				# Is date searching enabled (1 for yes, 0 for no)
+				enabled	DATE_SEARCH_ENABLED
+				character_name	DATE_CHARACTER_TYPE
+				<types>
+					# Character type to search with date if enabled.  Should be followed by the number 1.
+					ALL_CHARACTER_DATES		
+				</types>
+			</day_of_year>
+			<rarity>
+				# Is rarity search enabled
+				enabled	RARITY_ENABLED
+				character_name	RARITY_CHARACTER
+				<types>
+					# Character type to search with rarity if enabled.  Should be followed by the number 1.
+					ALL_RARITY
+				</types>
+				<order>
+					# Sample set of states for assigning order to.  This is a sample list with generic values and should be changed to correspond to DB values.
+					RARITY_ORDER
+				</order>
+			</rarity>
+			#<observations>
+			#	<types>
+					# The charactertype for which the user can observe the organism (currently only set for one type).  Should be followed by the number 1.
+			#	</types>
+			#</observations>
+		</specific>
+		<search>
+			<percent>
+				states	STATE_SCORE
+				habitat	HABITAT_SCORE
+				rarity	RARITY_SCORE
+				day_range	DATE_SCORE
+				observation_location	LOCATION_SCORE
+				observation_points	POINTS_SCORE
+			</percent>
+			<in_area>
+				check	AREA_SEARCH
+				# city, state, country, postal
+				type	AREA_SEARCH_TYPE
+				area	AREA_SEARCH_KEY
+				fullname	AREA_FULL_NAME
+			</in_area>
+		</search>
+	</characters>
+	<observationtypes>
+		# Add other icons for other observation types
+		<user>
+			name	User
+			description	Users in the field Observations
+			icon	/static/images/icons/user.png	
+		</user>
+	</observationtype>
+	<organisminfo>
+		<charactertypes>
+			# List all of the character types followed by a numerical order
+			CHARACTER_TYPES
+		</charactertypes>
+		<imagetypes>
+			# List all of the imagetypes
+			Field	1
+		</imagetypes>
+		<topimages>
+			# The type of image to display at the top of the organism info page
+			charactertype	DEFAULT_CHARACTER_TYPE
+			imagetype	Field
+		</topimages>		
+	</organisminfo>
+	<images>
+		# Default image types for display
+		defaultimagetype	Field
+	</images>
+</Site>
+<Layout>
+	<mobile>
+		# Use mobile layout (1 for yes, 0 for no)
+		enabled	USE_MOBILE
+	</mobile>
+	<tablet>
+		# Use table layout (1 for yes, 0 for no)
+		enabled	USE_TABLET
+	</tablet>
+	<kiosk>
+		# Use kiosk layout (1 for yes, 0 for no)
+		enabled	USE_KIOSK
+		# Specify IP Addresses for kiosk layout
+		ip	KIOSK_IP
+	</kiosk>
+</Layout>
+<Cache>
+	# Use site caching
+	enabled	USE_CACHING
+</Cache>
+<DB>
+	name DB_NAME
+	dsn DB_STRING
+	user DB_USER
+	password DB_PASSWORD
+</DB>
+<Model::DB>
+	systemobservation	System
+	defaultcharacter	DEFAULT_CHARACTER_TYPE
+	systemcharactertype	All
+	<no_image>
+		NO_IMAGE
+	</no_image>
+</Model::DB>
+<OAuth>
+	<facebook>
+		enabled	USE_FACEBOOK
+		app_id			FACEBOOK_APP_ID
+		consumer_key	FACEBOOK_KEY
+		consumer_secret	FACEBOOK_SECRET
+	</facebook>
+	<twitter>
+		enabled	USE_TWITTER
+		app_id			TWITTER_APP_ID
+		consumer_key	TWITTER_APP_ID
+		consumer_secret	TWITTER_SECRET
+	</twitter>
+</OAuth>
+<GoogleMaps>
+	api_key		GMAP_KEY
+</GoogleMaps>
+<GoogleAnalytics>
+	enabled USE_ANALYTICS
+	analytics_id	ANALYTICS_ID
+</GoogleAnalytics>
+<Webmaster>
+	<Google>
+		enabled	USE_GOOGLE_WEBMASTER
+		key	GOOGLE_WEBMASTER_KEY
+	</Google>
+	<Bing>
+		enabled	USE_BING_WEBMASTER
+		key	BING_WEBMASTER_KEY
+	</Bing>
+</Webmaster>
+<reCAPTCHA>
+	enabled	enabled USE_RECAPTCHA
+	public_key	RECAPTCHA_PUBLIC_KEY
+	private_key	RECAPTCHA_PRIVATE_KEY
+</reCAPTCHA>
+<Picup>
+	enabled	USE_PICUP
+</Picup>
+<ImageMagick>
+	file_separator	IM_FILE_SEPARATOR
+	system_convert	SYSTEM_CONVERT [[ PATH OR COMMAND FOR IMAGEMAGICK CONVERT (example could be /usr/bin/convert) ]]
+	system_mogrify	SYSTEM_MOGRIFY [[ PATH OR COMMAND FOR IMAGEMAGICK MOGRIFY (example could be /usr/bin/mogrify) ]]
+</ImageMagick>
+<Email>
+	default_from	DEFAULT_FROM_EMAIL
+	reply	REPLY_EMAIL
+</Email>
+<View::Email>
+	stash_key	email
+	template_prefix email
+	<default>
+		content_type	text/html
+		charset	utf-8
+		view	EmailHTML
+	</default>
+	# If you need to use SMTP mailer, use the config options below, otherwise leave comments in place
+	#<sender>
+	#	mailer	SMTP
+	#	<mailer_args>
+	#		host	[[ SMTP HOST ]]
+	#		port	[[ SMTP PORT ]]
+	#		sasl_username	[[ SMTP USERNAME ]]
+	#		sasl_password	[[ SMTP PASSWORD ]]
+	#		ssl	[[ USE SSL (1 for yes, 0 for no) ]]
+	#	</mailer_args>
+	#</sender>
+</View::Email>

@@ -1,0 +1,27 @@
+[% meta.title = 'Edit your observation' %]
+[% js.files = ('page.user.observation') -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var reviewName = '[% c.config.Observations.Status.Review -%]';
+	var imageIDURL = '[% c.uri_for(c.controller('Organisms_REST').action_for('findOrganismByID')) -%]';
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){		
+			$('form').attr('data-ajax', 'false');
+			locationSelector();
+			locationSelector_showOptions('#observed_location', '#search_map_location_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+			setUpObservation();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			locationSelector();
+			locationSelector_showOptions('#observed_location', '#search_map_location_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+			setUpObservation();
+		});
+	[% END -%]
+[% END -%]
+</script>
+<h2>Edit your observation</h2>
+<p><strong>The location that was entered for this observation has been geocoded into a latitude and longitude position.</strong></p>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

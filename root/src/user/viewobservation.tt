@@ -1,0 +1,96 @@
+[% meta.title = 'View Observation' -%]
+
+[% currentpath = c.request.path -%]
+[% IF c.request.params.status_msg != '' -%]
+	[% currentpath = currentpath _ '?status_msg=' _ c.request.params.status_msg.replace(' ', '+') | html -%]
+[% END -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% currentpath -%]")').live('pageshow',function(){
+			loadUserObservationPage();
+			photoSwipe_restartPhotoSwipe();
+		});
+	[% ELSE -%]
+	
+		$(document).ready( function() {
+			loadUserObservationPage();
+		});
+	[% END -%]
+	
+	function loadUserObservationPage() {
+		$('#user_observation_map_canvas').gmap({'center': new google.maps.LatLng(41.6000,-72.7000)}).bind('init', function(ev, map) {
+			var icon = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png'		
+			$('#user_observation_map_canvas').gmap('addMarker', {'position': '[% observation.latitude -%],[% observation.longitude -%]', 'icon': icon,  'bounds': true,});
+			$('#user_observation_map_canvas').gmap('option', 'zoom', 8);
+		});
+		
+		photoSwipe();
+	}
+[% END -%]
+</script>
+[% PROCESS include/html/messages.tt -%]
+<h2>My information about this observation</h2>
+[% IF observation.observestatus.status_name == c.config.Observations.Status.Review && observation.observationimages.size < 1 -%]
+	<div class="error_head_msg">Please make sure to add images to this observation so that the reviewer is able to identify the [% c.config.Site.organisms_singular.lower -%].</div>
+[% END -%]
+<a class="btn" data-role="button" data-theme="b" href="[% c.uri_for(c.controller('User').action_for('editObservation'), [observation.observation_id]) %]">Edit</a>
+<br />
+<a class="btn" data-role="button" data-theme="e" href="[% c.uri_for(c.controller('User').action_for('addImageToObservations'), [observation.observation_id]) %]">Add photos</a>
+<br />
+<a class="btn" data-role="button" data-theme="e" href="[% c.uri_for(c.controller('User').action_for('addNoteToObservations'), [observation.observation_id]) %]">Add notes</a>
+<br />
+<a class="btn" data-role="button" data-theme="e" href="[% c.uri_for(c.controller('User').action_for('deleteObservation'), [observation.observation_id]) %]">Delete</a>
+
+
+<br /><br />
+[% USE HTML %]
+[% IF observation.observestatus.status_name == c.config.Observations.Status.Published -%]
+	[% bgcolor = 'F1E8CB' -%]
+[% ELSE -%]
+	[% bgcolor = 'FFC1A4' -%]
+[%  END -%]
+	<p><strong>[% c.config.Site.organisms_singular -%]:</strong> <a href="[% c.uri_for(c.controller('User').action_for('viewOrganismInfo'), [observation.organism.organism_url]) %]">[% observation.organism.common_name -%]</a></p>
+	<p><strong>This Observation is currently: [% observation.observestatus.status_name -%]
+		
+	</strong></p>
+		<p><strong>[% observation.location_detail -%]</strong> observed on [% observation.date_observed_display -%]</p>
+		<p><strong>Number Seen:</strong>[% observation.number_seen -%]</p>
+		<div id="user_observation_map_canvas" style="width: 100%; height: 300px;"> </div>
+	<br />
+	<p><strong>Notes:</strong></p>
+		[% FOREACH note IN observation.observationnotes -%]
+			<div style="padding: 10px; border: solid; border-width: 1px; margin-bottom: 20px;">
+				[% text = HTML.escape(note.notes) -%]
+				[% text | replace('\n', '<br />') -%]
+				<br />
+			<a class="btn" data-role="button" data-mini="true" data-theme="b" href="[% c.uri_for(c.controller('User').action_for('editNoteObservations'), [observation.observation_id, note.note_id]);  -%]">Edit this note</a><br />
+			<a class="btn" data-role="button" data-mini="true" data-theme="r" href="[% c.uri_for(c.controller('User').action_for('deleteNoteObservations'), [observation.observation_id, note.note_id]);  -%]">Delete this note</a>
+			</div>
+	[% END -%]
+	<p><strong>Gallery:</strong></p>
+		[%	FOREACH photo IN observation.observationimages -%]
+			<div>
+				<div id="Gallery"><a data-ajax="false" photoid="[% photo.image_id %]" href="[% photo.filename %]/img-[% imagetouse -%].jpg" ><img src="[% photo.filename %]/thumb.jpg" imagetype="[% c.config.Site.organisms_singular | lower -%]" /></a></div>
+				<div style="margin-top: -90px; padding-left: 90px;">
+					<a class="btn" data-role="button" data-mini="true" data-theme="b" href="[% c.uri_for(c.controller('User').action_for('editImageObservation'), [observation.observation_id, photo.image_id]) -%]">Edit this photo</a>
+					<a class="btn" data-role="button" data-mini="true" data-theme="r" href="[% c.uri_for(c.controller('User').action_for('deleteImageObservation'), [observation.observation_id, photo.image_id]) -%]">Delete this photo</a>
+				</div>
+			</div>
+			<br /><br />
+		[% END -%]<br />
+		
+		[% IF observation.observationreviews.size > 0 -%]
+		<p><strong>Review Comments:</strong></p>
+			[%	FOREACH review IN observation.observationreviews -%]
+			<div style="padding: 10px; border: solid; border-width: 1px; margin-bottom: 20px;">
+					[% review.comments | replace('\n', '<br />')  | escape_js -%]
+					<br />
+					by: <strong>[% review.user_changed.username -%]</strong>
+				<br />
+				</div>
+			[% END -%]
+		[% END -%]
+	
+

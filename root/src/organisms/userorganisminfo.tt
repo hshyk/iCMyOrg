@@ -1,0 +1,69 @@
+[% metanoindex = 1 -%]
+[% meta.title = userorganism.user.username _ '\'s observation of the ' _ userorganism.organism.common_name _ ' ' _ c.config.Site.organisms_singular -%]
+[% meta.opengraph.title = 'View ' _ userorganism.user.username  _ '\'s observations of the ' _ userorganism.organism.common_name _ ' ' _ c.config.Site.organisms_singular -%]
+[% IF observations.first.observationimages.size > 0 -%] 
+	[% meta.opengraph.image = c.uri_for(observations.first.observationimages.first.filename) _ '/img-mobile.jpg' -%]
+[% ELSE -%]
+	[% meta.opengraph.image = c.uri_for(userorganism.organism.default_image.filename) _ '/img-mobile.jpg' -%]
+[% END -%]
+[% meta.opengraph.url = c.uri_for(c.controller('Organism').action_for('viewUserOrganismInfo'), userorganism.organism.organism_url, userorganism.user.provider_name_lower, userorganism.user.authid) -%]
+
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadUserOrgansimInfoPage();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadUserOrgansimInfoPage();
+		});
+	[% END -%]
+	function loadUserOrgansimInfoPage() {
+		$('#user_observation_map_canvas').gmap({'center': new google.maps.LatLng([% c.config.Site.map.latitude -%],[% c.config.Site.map.longitude -%])}).bind('init', function(ev, map) {
+			var icon = '[%  c.uri_for(c.config.Site.observationtypes.user.icon) -%]';		
+			[% FOREACH observation IN observations -%]
+			$('#user_observation_map_canvas').gmap('addMarker', {'position': '[% observation.latitude -%],[% observation.longitude -%]', 'icon': icon,  'bounds': true,}).click(function() {
+				var content = "<span style='font-size: 12px;'>"+
+				"<strong><a href='[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]' />[% observation.location_detail -%]</a></strong><br />" +
+				"[% observation.date_observed_display -%]</span>";
+				
+				$('#user_observation_map_canvas').gmap('openInfoWindow', {'content': content}, this);
+			});
+			[% END -%]
+			$('#user_observation_map_canvas').gmap('option', 'zoom', 8);
+		});
+			
+		setFacebookShare('.fb-share', '[% c.uri_for(c.controller('Organisms').action_for('viewUserOrganismInfo'),userorganism.user.provider.provider_name, userorganism.user.authid, userorganism.organism.organism_url) -%]');
+		setTwitterTweetButton('.twitter-tweet', '[% c.uri_for(c.controller('Organisms').action_for('viewUserOrganismInfo'),userorganism.user.provider.provider_name, userorganism.user.authid, userorganism.organism.organism_url) -%]',
+			"View [% userorganism.user.username -%]'s  observations of the [% userorganism.organism.common_name | html %] [% c.config.Site.organisms_singular -%]");
+			
+	}
+[% END -%]
+</script>
+
+
+<h3>[% userorganism.user.username -%]'s
+	<img src="[% c.uri_for('/static/images/' _ userorganism.user.provider_name_lower _ '.jpg') -%]" width="15" height="15" border="0" /> information about [% userorganism.organism.common_name | html %]</h3>
+	<a class="btn" data-role="button" href="[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'), userorganism.user.provider_name_lower, userorganism.user.authid) -%]">View [% userorganism.user.username -%]'s Life List</a>
+<br />
+<div class="sharelinks">
+	<span class="fb-share"></span>
+	<span class="twitter-tweet"></span>
+</div>
+<br /><br />
+[% USE HTML %]
+<div class="observationsmap">
+	<div id="user_observation_map_canvas" style="width: 100%; height: 300px;"> </div>
+</div>
+	Observations: <br />
+	<br />
+	<div class="observationslist">
+	[% FOREACH observation IN observations -%]
+		<strong><a href='[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]' />[% observation.location_detail -%]</a></strong><br />
+		[% observation.date_observed_display -%]<br /><br />
+	[% END -%]
+		</div>
+
+

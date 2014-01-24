@@ -1,0 +1,7 @@
+[% meta.title = 'Delete Photo' %]
+<h2>Delete image</h2>
+[% PROCESS include/html/messages.tt -%]
+<br />
+<img src="[% image.filename -%]/thumb.jpg" />
+<br />
+[% form.render %]

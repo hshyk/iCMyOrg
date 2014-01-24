@@ -1,0 +1,4 @@
+[% meta.title = 'Edit Organism State' -%]
+<h2>Edit Organism State</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

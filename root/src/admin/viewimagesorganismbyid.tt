@@ -1,0 +1,38 @@
+[% meta.title = 'View Images of ' _ organism.common_name %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("imageList");
+	});
+[% END -%]
+</script>
+<h2>View Images of [% organism.common_name -%]</h2>
+<br />
+[% PROCESS include/html/messages.tt -%]
+<table class="tablesorter" id="imageList">
+	<thead>  
+		<tr>
+			<th>Image</th>
+			<th>Observation Type</th>
+			<th>Type</th>
+			<th>Observation Type</th>
+			<th>Submitted by</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+	[% FOREACH image IN images -%]
+		<tr>
+			<td><img src="[% image.filename -%]/thumb.jpg" /></td>
+			<td>[% image.image_type.image_type_name -%]</td>
+			<td>[% image.character_type.character_type -%]</td>
+			<td>[% image.observation.observation_type.observation_name -%]</td>
+			<td>[% image.observation.user_organism.users.username-%]</td>
+			<td><a href="[% c.uri_for(c.controller('Admin').action_for('editOrganismImage'), image.image_id) -%]">Edit this image</a></td>
+			<td><a href="[% c.uri_for(c.controller('Admin').action_for('deleteImageObservations'), image.image_id) -%]">Delete this image</a></td>
+		</tr>
+	[% END -%]
+	</tbody>
+</table>

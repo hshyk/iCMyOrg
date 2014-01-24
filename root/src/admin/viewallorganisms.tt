@@ -1,0 +1,26 @@
+[% meta.title = 'View All ' _ c.config.Site.organisms %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("list");
+	});
+[% END -%]
+</script>
+<h2>View all [% c.config.Site.organisms -%]</h2>
+<table class="tablesorter" id="list">
+	<thead>  
+		<tr>
+			<th>Scientific Name</th>
+			<th>Common Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH organism IN organisms -%]
+		<tr>
+	        <td><a href="[% c.uri_for(c.controller('Admin').action_for('viewOrganismByID'), organism.organism_id)%]" />[% organism.scientific_name %]</a></td>
+	        <td>[% organism.common_name %]</td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

@@ -1,0 +1,4 @@
+[% meta.title = 'View host' -%]
+<h2>View [% c.config.Site.host.name_singular -%]</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

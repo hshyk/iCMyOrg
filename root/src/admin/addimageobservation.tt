@@ -1,0 +1,4 @@
+[% meta.title = title %]
+<h2>[% title %]</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

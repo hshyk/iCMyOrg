@@ -1,0 +1,59 @@
+[% meta.title = 'Review Observation' -%]
+[% js.files = ('page.reviewer.observation') -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var imageIDURL = '[% c.uri_for(c.controller('Organisms_REST').action_for('findOrganismByID')) -%]';
+		$(document).ready( function() {
+			loadReviewObservationPage();
+			setUpObservation();
+		});
+	
+	function loadReviewObservationPage() {
+		$('#user_observation_map_canvas').gmap({'center': new google.maps.LatLng(41.6000,-72.7000)}).bind('init', function(ev, map) {
+			var icon = 'http://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png'		
+			$('#user_observation_map_canvas').gmap('addMarker', {'position': '[% observation.latitude -%],[% observation.longitude -%]', 'icon': icon,  'bounds': true,});
+			$('#user_observation_map_canvas').gmap('option', 'zoom', 8);
+		});
+		
+		photoSwipe();
+	}
+[% END -%]
+</script>
+<h2>Review Observation</h2>
+[% PROCESS include/html/messages.tt -%]
+<div class="forms">
+<p><strong>[% observation.location_detail | escape_js -%]</strong> observed on [% observation.date_observed_display -%]</p>
+<p><strong>Added by:</strong> [% observation.user_organism.users.get_full_name -%](<a href="[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'),  observation.user_organism.users.provider_name_lower, observation.user_organism.users.username) -%]">[% observation.user_organism.users.username -%]</a>
+	<img src="[% c.uri_for('/static/images/' _ observation.user_organism.users.provider.provider_name _ '.jpg') -%]" width="15" height="15" border="0" />)<br />
+<p><strong>Email:</strong><a href="mailto:[% observation.user_organism.users.email -%]">[% observation.user_organism.users.email -%]</a></p>
+<div id="user_observation_map_canvas" style="width: 100%; height: 300px;"> </div>
+<p><strong>Notes:</strong></p>
+		[% FOREACH note IN observation.observationnotes -%]
+			<div style="padding: 10px; border: solid; border-width: 1px; margin-bottom: 20px;">
+				[% text = HTML.escape(note.notes) -%]
+				[% text | replace('\n', '<br />') -%]
+				<br />
+			</div>
+	[% END -%]
+	<p><strong>Gallery:</strong></p>
+		[%	FOREACH photo IN observation.observationimages -%]
+			<div>
+				<div id="Gallery"><a data-ajax="false" photoid="[% photo.image_id %]" href="[% photo.filename %]/img-[% imagetouse -%].jpg" ><img src="[% photo.filename %]/thumb.jpg" imagetype="[% c.config.Site.organisms_singular | lower -%]" /></a></div>
+			</div>
+			<br /><br />
+		[% END -%]<br />
+		[% IF observation.observationreviews.size > 0 -%]
+		<p><strong>Review Comments:</strong></p>
+			[%	FOREACH review IN observation.observationreviews -%]
+			<div style="padding: 10px; border: solid; border-width: 1px; margin-bottom: 20px;">
+					[% review.comments | replace('\n', '<br />')  | escape_js -%]
+					<br />
+					by: <strong>[% review.user_changed.username -%]</strong>
+				<br />
+				</div>
+			[% END -%]
+		[% END -%]<br /><br />
+[% form.render %]
+</div>
+<br />

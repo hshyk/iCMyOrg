@@ -1,0 +1,73 @@
+[% meta.title = 'Use the Picup app to upload images' %]
+[% js.files = ('picup') -%]
+<script language="javascript">
+
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			$('form').attr('data-ajax', 'false');
+				$.mobile.showPageLoadingMsg();
+				$.ajaxSetup({
+					async: false
+				});
+	
+				var currentParams = {};
+				window.name = "iPhoneForm";
+			
+				$.post('[% c.uri_for(c.controller('User_REST').action_for('confirmPicupImage')) -%]',{observation: [% observation_id -%]}, function(data) {	
+			
+				if (data['issuccess'] == 1) {
+			
+					$('body').addClass("iphone");
+					// Define the callback handler
+									
+					// We will check the hash when the page loads in-case it was opened in a new page
+					// due to memory constraints
+					//Picup2.checkHash();
+				
+					// Set some starter params	
+					currentParams = {
+						"callbackURL" 			: "[% c.uri_for(c.controller('User').action_for('closePicupWindow')) -%]",
+						"mediaTypesAllowed"		: "image",				
+						"shouldIncludeEXIFData"	: "true",
+						"referrername" 			: escape("[% c.config.name -%]"),
+						"referrerfavicon" 		: escape("[% c.uri_for('/static/images/favicon.ico') -%]"),
+						"purpose"           	: escape("Upload your image observation"),
+						"debug" 				: "false",
+						"postURL"           	: "[%  c.uri_for(c.controller('User_REST').action_for('uploadPicupImage')) | uri -%]",
+						"postValues"			: "key%3D[% passkey -%]",
+						"isMultiselectForbidden": "true",
+						"returnServerResponse"	: "true"
+					};
+					
+					Picup2.convertFileInput("iosimage", currentParams);
+					
+					$('#iosimage').textinput({theme: 'c'});
+				
+					$('#iosimage').click(function() {
+			  			window.close();
+					});
+				}
+				else {
+					$('#picupform').replaceWith('You are unable to upload image at this time.  Please save these images and add them later using a desktop computer');
+				}
+			
+			});
+					
+			$.ajaxSetup({
+				async: true
+			});
+			$.mobile.hidePageLoadingMsg();
+		});
+	
+	[% END -%]
+
+</script>
+<h2>[% title %]</h2>
+[% PROCESS include/html/messages.tt -%]
+<div id="picupform">
+	Please select your photo to upload, you will need to <a href="http://itunes.apple.com/us/app/picup/id354101378?mt=8" target="_blank" rel="external">install Picup App (Free) from iTunes.</a> <br /><br />
+	Picup is a native iPhone Application that facilitates photo uploads to the web.
+	Since Mobile Safari on iOS 5 and below doesn't support file-upload form fields, a webapp can instruct Picup to choose and
+	upload a photo. Once the upload is complete, you will be asked to provide other information regarding the photo <br />
+	<form data-ajax="false"><input data-role="button" type="text" id="iosimage" /></form>
+</div>

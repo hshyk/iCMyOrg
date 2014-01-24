@@ -1,0 +1,6 @@
+var mapMarkers = new Array();
+[% FOREACH type IN c.config.Site.observationtypes -%]
+mapMarkers['[% type.value.name -%]'] = new Array();
+mapMarkers['[% type.value.name -%]']['icon'] = '[% type.value.icon -%]';
+mapMarkers['[% type.value.name -%]']['description'] = '[% type.value.description -%]';
+[% END -%]

@@ -1,0 +1,11 @@
+[% meta.title = 'Instructions' %]
+<h2>Welcome to [% c.config.name -%]</h2>
+<p>&nbsp;</p>
+<p>How to use the site</p>
+<p>&nbsp;</p>
+<p>Desktop computer tips</p>
+<p>&nbsp;</p>
+<p><a href="[% c.uri_for(c.controller('Pages').action_for('instructionsiOS')) -%]">iOS (iPhone, iPad and iPod Touch) tips</a></p>
+<p>&nbsp;</p>
+<p><a href="[% c.uri_for(c.controller('Pages').action_for('instructionsAndroid')) -%]">Android tips</a></p>
+

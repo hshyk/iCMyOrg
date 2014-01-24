@@ -1,0 +1,33 @@
+[% meta.title = 'Add an observation' %]
+[% js.files = ('page.user.observation') -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	var reviewName = '[% c.config.Observations.Status.Review -%]';
+	var imageIDURL = '[% c.uri_for(c.controller('Organisms_REST').action_for('findOrganismByID')) -%]';
+	[% IF layout == 'mobile' -%]
+		[% path = c.request.path -%]
+		[% IF c.request.param(c.config.Site.organisms_singular.lower).size > 0 -%]
+			[% path = path _ '?' _ c.config.Site.organisms_singular.lower _ '='  _ c.request.param(c.config.Site.organisms_singular.lower) -%]
+		[% END -%]
+		
+		$('div:jqmData(url="/[% path -%]")').live('pageshow',function(){
+			$('form').attr('data-ajax', 'false');
+			locationSelector();
+			locationSelector_showOptions('#observed_location', '#search_map_location_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+			setUpObservation();
+			
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			locationSelector();
+			locationSelector_showOptions('#observed_location', '#search_map_location_canvas', [% c.config.Site.map.latitude -%], [% c.config.Site.map.longitude -%],[% c.config.Site.map.zoom -%]);
+			setUpObservation();
+		});
+	[% END -%]
+[% END -%]
+</script>
+<h2>Add Observation</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]
+<p>&nbsp;</p>

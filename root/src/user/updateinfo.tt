@@ -1,0 +1,4 @@
+[% meta.title = 'Update your information' -%]
+<h2>Update your information</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

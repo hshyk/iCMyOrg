@@ -1,0 +1,80 @@
+[% meta.title = 'Admin' %]
+
+<h1>Administrator Menu</h1>
+[% PROCESS include/html/messages.tt -%]
+<p>&nbsp;</p>
+<img src="[% c.uri_for('/static/images/admin/organism.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addOrganism')) -%]" />Add a [% c.config.Site.organisms_singular | lower -%]</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewOrganisms')) -%]" />View all [% c.config.Site.organisms | lower -%]</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/organism-image.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addSystemImageToOrganism')) -%]" />Add images to a [% c.config.Site.organisms_singular | lower -%]</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewImageOrganisms')) -%]" />View all [% c.config.Site.organisms | lower -%] images</a>
+</div>
+<br />
+[% IF c.config.Site.host.enabled -%]
+<img src="[% c.uri_for('/static/images/admin/host.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addHost')) -%]" />Add a [% c.config.Site.host.name_singular | lower -%]</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewHosts')) -%]" />View all [% c.config.Site.host.name | lower -%]</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/host-image.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addImageToHost')) %]" />Add images to a [% c.config.Site.host.name_singular | lower -%]</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewImageHosts')) %]" />View all [% c.config.Site.host.name | lower -%] images</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/organism-host.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addOrganismHost')) %]" />Connect a [% c.config.Site.organisms_singular | lower -%] to a [% c.config.Site.host.name_singular | lower -%]</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewOrganismsHosts')) %]" />View all [% c.config.Site.organisms | lower -%] [% c.config.Site.host.name | lower -%]</a>
+</div>
+<br />
+[% END -%]
+<img src="[% c.uri_for('/static/images/admin/character.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addCharacter')) %]" />Add a character</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewCharacters')) %]" />View all characters</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/state.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addState')) %]" />Add a state</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewStates')) %]" />View all states</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/organism-state.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addOrganismState')) %]" />Add a [% c.config.Site.organisms_singular | lower -%] state</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewOrganismStates')) %]" />View all [% c.config.Site.organisms | lower -%] states</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/observation.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('addObservation')) %]" />Add an observation</a>
+<br />
+<a class="btn" href="[% c.uri_for(c.controller('Admin').action_for('viewObservations')) %]" />View all observations</a>
+</div>
+<br />
+<img src="[% c.uri_for('/static/images/admin/user.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[%  c.uri_for(c.controller('Admin').action_for('viewAllUsers')) %]" />View users</a>
+</div>
+<br /><br />
+<img src="[% c.uri_for('/static/images/admin/system.jpg') %]" width="50" height="50" />
+<div style="margin-top: -55px; padding-left: 60px;">
+<a class="btn" href="[%  c.uri_for(c.controller('Admin').action_for('clearCache')) %]" />Clear the cache</a>
+</div>
+<br />

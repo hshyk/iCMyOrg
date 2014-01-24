@@ -1,0 +1,4 @@
+[% meta.title = 'Edit notes' %]
+<h2>Edit your observation notes</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

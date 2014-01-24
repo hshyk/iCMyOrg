@@ -1,0 +1,4 @@
+[% meta.title = 'Add host' -%]
+<h2>Add a [% c.config.Site.host.name_singular -%]</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

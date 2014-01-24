@@ -1,0 +1,7 @@
+[% meta.title = 'Find ' _ c.config.Site.organisms -%]
+<h1>Find [% c.config.Site.organisms -%]</h1>
+<p>&nbsp;</p>
+<p><a class="btn" data-dom-cache="true" data-role="button" href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByName')) -%]" title="" >... by name</a><p>
+<p><a class="btn" data-dom-cache="true" data-role="button" href="[%  c.uri_for(c.controller('Organisms').action_for('searchOrganismsByLocation')) %]" title="" >... by location</a></p>
+<p><a class="btn" data-dom-cache="true" data-role="button" href="[%  c.uri_for(c.controller('Organisms').action_for('searchOrganismsByDescription')) %]" title=""  >... by description</a></p>
+<p><a class="btn" data-dom-cache="true" data-role="button" href="[%  c.uri_for(c.controller('Organisms').action_for('viewExampleState')) %]" title=""  >View Examples of Traits</a></p>

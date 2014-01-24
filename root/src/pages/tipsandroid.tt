@@ -1,0 +1,13 @@
+[% meta.title = 'Instructions for Android Devices' %]
+<h2>Tips for Android devices</h2>
+<p>&nbsp;</p>
+<h3>Enable Location</h3>
+<p>Most Android devices have a dropdown menu when pulling from the top of the screen.  When this menu is pulled down,there is usually a GPS icon which will enable the GPS. 
+If it is not there, it may be under location services in the settings menu.</p>
+<p>&nbsp;</p>
+<h3>Adding an [% c.config.name -%] link to your home screen</h3>
+You must first add the site to your bookmarks. This is usually available at the top next to the URL bar.  There may either be a menu bar or a bookmark button at the top.
+Once the bookmark is added go to your home screen and hit the menu.  This should bring up a menu with an Add button.  Depending on your device and operating system version,
+this Add button may be in a different spot.  Once you select the Add button, choose shortcuts, then bookmarks.  Now select [% c.config.name -%] and it should add the icon to your menu.
+</p> 
+<p>&nbsp;</p>

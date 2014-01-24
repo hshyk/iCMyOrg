@@ -1,0 +1,4 @@
+[% meta.title = 'Add an image to this host' %]
+<h2>Host</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

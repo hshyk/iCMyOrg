@@ -1,0 +1,35 @@
+[% meta.title = 'View Pending Observations' -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("list");
+	});
+[% END -%]
+</script>
+<h2>View Pending Observations</h2>
+<table class="tablesorter" id="list">
+	<thead>  
+		<tr>
+			<th>Date Observed</th>
+			<th>Common Name</th>
+			<th>User Added</th>
+			<th>Has Photos?</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH observation IN observations -%]
+		<tr>
+	        <td><a href="[% c.uri_for(c.controller('Review').action_for('viewObservationByID'), observation.observation_id)%]" />[% observation.date_observed_display %]</a></td>
+	        <td>[% observation.organism.common_name -%]</td>
+	        <td>[% observation.user_organism.users.username -%]</td>
+	        <td>[% IF observation.observationimages.defined -%]
+	        	YES
+	        	[%ELSE -%]
+	        	NO
+	        	[% END -%]
+	        </td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

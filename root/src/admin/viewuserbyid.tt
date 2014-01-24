@@ -1,0 +1,30 @@
+[% meta.title = 'User ' _  user.username _ '\'s Information' %]
+<h2>View User [% user.username -%]'s information </h2>
+<h3>Info:</h3>
+<p>First Name: [% user.first_name -%]</p>
+<p>Last Name: [% user.last_name -%]</p>
+<p>Email: [% user.email -%]</p>
+<p>Username: [% user.username -%]</p>
+<p>Authentication Method: [% user.provider.provider_name -%]</p>
+<p>Date Registered: [% user.date_added_display -%]</p>
+<p>Status: [% user.status.status_name -%]</p>
+<p>Roles: [% FOREACH role IN user.roles -%]
+[% IF role.role != user.roles.first.role -%], [% END -%][% role.role -%]
+[% END -%]</p>        	
+<p>&nbsp;</p>
+<p><strong>Life list:</strong><br />
+[% FOREACH organism IN user.users_organisms -%]
+	[% organism.organism.common_name -%]<br />
+	[% FOREACH observation IN organism.observations -%]
+	<div style="padding: 10px; border: solid; border-width: 1px; background-color: #F1E8CB; margin-bottom: 20px; min-height: 100px;">
+		<div id="Gallery" style="float: left;">
+			<a data-ajax="false" photoid="[% observation.first_image.image_id -%]" href="[% observation.first_image.filename -%]/img-[% imagetouse -%].jpg"><img src="[% observation.first_image.filename -%]/thumb.jpg" imagetype="[% c.config.Site.organism_singular -%]" /></a>
+		</div>
+		<div style="margin-left: 110px;">
+		<p><strong><a href="[% c.uri_for(c.controller('Admin').action_for('viewObservationByID'), [observation.observation_id]) -%]" />[% observation.location_detail -%]</a></strong></p>
+		<p><strong>Observed on:</strong> [% observation.date_observed_display -%]</p>
+		</div>
+	</div>
+	[% END -%]
+[% END -%]
+<p>&nbsp;</p>

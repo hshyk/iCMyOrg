@@ -1,0 +1,30 @@
+[% meta.title = 'Login' %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('form').attr('action', '/[% c.request.path -%]');
+	[% END -%]
+[% END -%]
+</script>
+	
+<!-- Login form -->
+[% PROCESS include/html/messages.tt -%]
+<div class="forms">
+[% form.render %]
+</div>
+<br />
+<p><a class="btn" data-role="button" data-theme="b" data-icon="register" href="[% c.uri_for(c.controller('Authentication').action_for('register')) %]" >Not a user? Register Here</a><p>
+<p><a class="btn" data-role="button" data-theme="e" href="[% c.uri_for(c.controller('Authentication').action_for('forgotPassword')) %]">Forgot your password?</a></p>
+<p><a class="btn" data-role="button" data-theme="e" href="[% c.uri_for(c.controller('Authentication').action_for('forgotUsername')) %]">Forgot your username?</a></p>
+<br />
+[% IF c.config.OAuth.facebook.enabled  || c.config.OAuth.twitter.enabled -%]
+<p>You can also login using the following sites:</p>
+	[% IF c.config.OAuth.facebook.enabled -%]
+	<p><a class="btn" data-role="button" data-icon="facebook" href="[% c.uri_for('/login/facebook') %]" data-ajax="false" >Login using Facebook</a><p>
+	[% END -%]
+	[% IF c.config.OAuth.twitter.enabled -%]
+	<p><a class="btn" data-role="button" data-icon="twitter" href="[% c.uri_for('/login/twitter') %]" data-ajax="false" >Login using Twitter</a><p>
+	[% END -%]
+	<p>&nbsp;</p>
+[% END -%]

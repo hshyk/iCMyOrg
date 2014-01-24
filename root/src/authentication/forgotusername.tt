@@ -1,0 +1,6 @@
+[% meta.title = 'Forgot Username' %]
+<h3>Please enter your email address</h3>
+[% PROCESS include/html/messages.tt -%]
+<div class="forms">
+[% form.render %]
+</div>

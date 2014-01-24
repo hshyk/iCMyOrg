@@ -1,0 +1,31 @@
+[% meta.title = 'View Images of ' _ host.common_name %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("imageList");
+	});
+[% END -%]
+</script>
+<h2>View Images of [% host.common_name -%]</h2>
+<br />
+<table class="tablesorter" id="imageList">
+	<thead>  
+		<tr>
+			<th>Image</th>
+			<th>Image Type</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+	[% FOREACH image IN images -%]
+		<tr>
+			<td><img src="[% image.filename -%]/thumb.jpg" /></td>
+			<td>[% image.image_type.image_type_name -%]</td>
+			<td><a href="[% c.uri_for(c.controller('Admin').action_for('editImageHostByID'), image.image_id) -%]">Edit this image</a></td>
+			<td><a href="">Delete this image</a></td>
+		</tr>
+	[% END -%]
+	</tbody>
+</table>

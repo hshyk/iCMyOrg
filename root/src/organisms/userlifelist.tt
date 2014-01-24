@@ -1,0 +1,44 @@
+[% metanoindex = 1 -%]
+[% meta.title = userinfo.username _ '\'s lifelist' -%]
+[% meta.opengraph.title = 'Check out ' _ userinfo.username _ '\'s lifelist on '_ c.config.name -%]
+[% meta.opengraph.description = 'See all of the ' _ c.config.Site.organisms _' that ' _ userinfo.username _ ' has in their lifelist' -%]
+[% meta.opengraph.image = c.uri_for('/static/images/facebook-share.jpg') -%]
+[% meta.opengraph.url = c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'), userinfo.provider_name_lower, userinfo.authid)  -%]
+<h2>[% userinfo.username | html -%]'s Life List</h2>
+<p>&nbsp;</p>
+[% IF userorganisms -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadViewLifeList();
+		});
+		
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadViewLifeList();
+		});
+	[% END -%]
+	
+	function loadViewLifeList() {
+		setFacebookShare('.fb-share', '[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'), userinfo.provider_name_lower, userinfo.authid) -%]');
+		setTwitterTweetButton('.twitter-tweet', '[% c.uri_for(c.controller('Organisms').action_for('viewUserLifeList'),  userinfo.provider_name_lower, userinfo.authid)  -%]',
+			"See user Life List!");
+	}
+[% END -%]
+</script>
+<div class="sharelinks">
+	<span class="fb-share"></span>
+	<span class="twitter-tweet"></span>
+</div>
+<br /><br />
+<ul data-role="listview" data-theme="g">
+	[% FOREACH observedorganism IN userorganisms -%]
+		<li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="btn ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-li-has-thumb ui-btn-up-c" style="height: 120px; float: none; ">
+		<a class="ui-link-inherit" href="[% c.uri_for(c.controller('Organisms').action_for('viewUserOrganismInfo'), [ observedorganism.organism.organism_url, userinfo.provider_name_lower, userinfo.username ]) -%]" /><img class="ui-li-thumb" src="[% observedorganism.organism.default_image.filename =%]/thumb.jpg" /><h3 class="ui-li-heading">[% observedorganism.organism.common_name | html %]</h3>
+		<p class="ui-li-desc">[% observedorganism.organism.scientific_name | html %]</p></a></li>
+
+	[% END -%]
+		</ul>
+[% END -%]

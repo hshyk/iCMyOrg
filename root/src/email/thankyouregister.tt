@@ -1,0 +1,23 @@
+<table class="w580" border="0" cellpadding="0" cellspacing="0" width="580">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p class="article-title" align="left"><singleline label="Title">Thank you for registering for [% c.config.name -%]!</singleline></p>
+                                    <div class="article-content" align="left">
+                                        <multiline label="Description"><p>Welcome to [% c.config.name -%]!</p>
+<p>When you are out in the field, you can begin your <a href="[% c.uri_for(c.controller('Organisms').action_for('index')) -%]">search for [% c.config.Site.organisms | lower -%]</a>.
+You can find them by <a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByName')) -%]">name</a>,
+<a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByLocation')) -%]">location</a> or even by 
+<a href="[% c.uri_for(c.controller('Organisms').action_for('searchOrganismsByDescription')) -%]">description</a>. 
+<p>Now that you are a user, you can begin creating your <a href="[% c.uri_for(c.controller('User').action_for('viewLifeLis')) -%]">lifelist</a>!  When you are out
+in the field and you have identified a [% c.config.Site.organisms_singular | lower -%], you can then add it to your list.  Try to observe as many [% c.config.Site.organisms | lower -%] as you can!  You can also add notes
+as well as photos of the [% c.config.Site.organisms | lower -%] you have seen and then share them with others.
+<p>If this is email was sent in error please contact us at [% c.config.Email.reply -%]</p>
+</multiline>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" height="10" width="580"></td></tr>
+                        </tbody></table>
+
+
+

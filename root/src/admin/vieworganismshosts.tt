@@ -1,0 +1,36 @@
+[% meta.title = 'View all ' _ c.config.Site.organisms _ '\' ' _ c.config.Site.host.name  %]
+[% js.files = ('page.admin.view' _ c.config.Site.organisms.lower _ 'hosts') -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+var infoURL = "[% c.uri_for(c.controller('Admin_REST').action_for('searchOrganismHosts')) -%]";
+$(document).ready(function() {
+						   
+	$("#list").tablesorter(); 				   						   
+	getOrganisms();
+
+	$('#organismID').change(function() {
+		getOrganisms();
+	});
+	
+});
+[% END -%]
+</script>
+<h2>View all [% c.config.Site.organisms -%]' [% c.config.Site.host.name -%]</h2>
+Select a [% c.config.Site.organisms_singular.lower -%]
+<select id="organismID" name="organismID">
+[% FOREACH organism IN organisms -%]
+   <option value="[% organism.organism_id %]">[% organism.scientific_name %]</option>
+[% END -%]
+</select>
+<table class="tablesorter" id="list">
+	<thead>  
+		<tr>
+			<th>Scientific Name</th>
+			<th>Common Name</th>
+			<th>Edit</th>
+		</tr>
+	</thead> 
+	<tbody>
+    </tbody>
+</table>

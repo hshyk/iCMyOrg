@@ -1,0 +1,17 @@
+[% meta.title = 'Edit ' _ organism.common_name -%]
+[% js.files = ('ckeditor') -%]
+
+<h2>View [% organism.common_name -%]</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]
+<br /><br />
+[% FOREACH type IN charactertypes -%]
+Default [% type.character_type -%] image:<br />
+	[% image = organism.default_image(type.character_type) -%]
+	[% IF image.image_id > 0 %]
+<img src="[% image.filename -%]/thumb.jpg" /><br />
+	[% ELSE -%]
+<img src="[% image.filename -%]" /><br />
+	[% END -%]
+<a href="[% c.uri_for(c.controller('Admin').action_for('editOrganismDefaultImage'), organism.organism_id, type.character_type_id) -%]">Edit Default Image</a><br /><br />
+[% END -%]

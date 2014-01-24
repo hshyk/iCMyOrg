@@ -1,0 +1,14 @@
+[% IF layout == "mobile" -%]
+	<script language="javascript">
+	[% USE Filter.Minify.JavaScript.XS -%]
+	[% FILTER minify_js -%]
+	$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+		$('form').attr('data-ajax', 'false');
+	});
+	[% END -%]
+	</script>
+[% END -%]
+[% meta.title = 'Add an image to your observation' %]
+<h2>Add an image to your observation of [% observation.organism.common_name -%]</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

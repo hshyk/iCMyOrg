@@ -1,0 +1,54 @@
+[% meta.title = 'My info about ' _ userorganism.organism.common_name %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	[% IF layout == 'mobile' -%]
+		$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+			loadUserOrganismPage();
+		});
+	[% ELSE -%]
+		$(document).ready( function() {
+			loadUserOrganismPage();
+		});
+	[% END -%]
+	function loadUserOrganismPage() {
+
+		setFacebookShare('.fb-share', '[% c.uri_for(c.controller('Organism').action_for('viewUserOrganismInfo'),c.user.provider.provider_name, c.user.username, userorganism.organism.organism_url) | lower-%]');
+		setTwitterTweetButton('.twitter-tweet', '[% c.uri_for(c.controller('Organism').action_for('viewUserOrganismInfo'),c.user.provider.provider_name, c.user.username, userorganism.organism.organism_url) | lower -%]',
+			"View [% user.username -%]'s  observations of the [% userorganism.organism.common_name | html %] [% c.config.Site.organisms_singular | lower -%]");
+			
+	}
+[% END -%]
+</script>
+<h2>[% userorganism.organism.scientific_name | html %]</h2>
+<h3>[% userorganism.organism.common_name | html %]</h3>	
+<img src="[% c.uri_for(userorganism.organism.default_image.filename) | html %]/thumb.jpg" />
+<br /><br />
+<div class="sharelinks">
+	<span class="fb-share"></span>
+	<span class="twitter-tweet"></span>
+</div>
+<br /><br />
+<a class="btn" data-role="button" href="[% c.uri_for(c.controller('User').action_for('addObservation'), {'organism' => userorganism.organism.organism_url}) -%]">Add an observation</a>
+<br /><br />
+[% USE HTML %]
+<h4>My Observations</h4>
+[% mapcount = 1 -%]
+[% FOREACH observation IN observations -%]
+	[% IF observation.status.status_name == c.config.Observations.Status.Published -%]
+		[% bgcolor = 'F1E8CB' -%]
+	[% ELSIF observation.status.status_name == c.config.Observations.Status.Unpublished -%]
+		[% bgcolor = 'FFC1A4' -%]
+	[% ELSIF  observation.status.status_name == c.config.Observations.Status.Review -%] 
+		[% bgcolor = 'EDF969' -%]
+	[% ELSE -%]
+	[%  END -%]
+	<div style="padding: 10px; border: solid; border-width: 1px; background-color: #[% bgcolor -%]; margin-bottom: 20px;">
+		<p><strong>[% observation.location_detail -%]</strong></p>
+		<p><strong>Observed on: [% observation.date_observed_display -%]</strong></p>
+		<p><strong>This Observation is currently: [% observation.status.status_name -%]</strong></p>
+		<p><strong><a class="btn" data-role="button" data-mini="true" href="[% c.uri_for(c.controller('User').action_for('observationInfo'), observation.observation_id) %]">View Observation Details</a></p>
+	</div>
+[% END -%]
+<br /><br />
+

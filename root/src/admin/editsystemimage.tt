@@ -1,0 +1,7 @@
+[% meta.title = 'Edit Image' %]
+<h2>Edit Image</h2>
+[% PROCESS include/html/messages.tt -%]
+<p><a href="[% c.uri_for(c.controller('Admin').action_for('addImageToState'), image.image_id) -%]">Add states to this image</a></p>
+<p>&nbsp;</p>
+<img src="[% image.filename -%]/thumb.jpg" />
+[% form.render %]

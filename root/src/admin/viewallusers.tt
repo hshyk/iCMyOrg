@@ -1,0 +1,33 @@
+[% meta.title = 'View all Users' %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("userList");
+	});
+[% END -%]
+</script>
+<h2>View all Users</h2>
+<table class="tablesorter" id="userList">
+	<thead>  
+		<tr>
+			<th>Username</th>
+			<th>Authentication</th>
+			<th>Roles</th>
+			<th>Edit</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH user IN users -%]
+		<tr>
+	        <td><a href="[% c.uri_for(c.controller('Admin').action_for('viewUserByID'), user.user_id) %]" />[% user.username %]</td>
+	        <td>[% user.provider.provider_name -%] <img src="[% c.uri_for('/static/images/' _ user.provider.provider_name.lower _ '.jpg') -%]" width="20" height="20"></td>
+	        <td>[% FOREACH role IN user.roles -%]
+	        		[% IF role.role != user.roles.first.role -%], [% END -%][% role.role -%]
+	        	[% END -%]
+	        </td>
+	        <td><a href="[% c.uri_for(c.controller('Admin').action_for('editUserByID'), user.user_id) %]" >Edit User</a></td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

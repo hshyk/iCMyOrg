@@ -1,0 +1,14 @@
+[% meta.title = 'Edit Photo' %]
+<script language="javascript">
+[% IF layout == 'mobile' -%]
+	$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+		$('form').attr('data-ajax','false');
+	});
+[% END -%]
+</script>
+<h2>Edit the Observation Image</h2>
+[% PROCESS include/html/messages.tt -%]
+<br />
+<img src="[% image.filename -%]/thumb.jpg" />
+<br />
+[% form.render %]

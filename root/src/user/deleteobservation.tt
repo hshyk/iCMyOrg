@@ -1,0 +1,9 @@
+[% meta.title = 'Delete Observation' %]
+<h2>Delete Observation</h2>
+[% PROCESS include/html/messages.tt -%]
+<br />
+<strong>Please note that deleting this observation will delete all notes and images attached to this observation.
+Once this observation is deleted, it cannot be recovered.</strong>
+<br /><br />
+[% observation.location_detail -%]<br /><br />
+[% form.render %]

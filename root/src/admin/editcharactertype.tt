@@ -1,0 +1,4 @@
+[% meta.title = 'Edit Character Type' -%]
+<h2>Edit Character Type</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]

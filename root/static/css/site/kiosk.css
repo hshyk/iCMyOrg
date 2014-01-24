@@ -1,0 +1,291 @@
+/* General HTML Body Settings */
+@font-face {
+    font-family: 'bangla_mnregular';
+    src: url('/static/font/bangla_mn-webfont.eot');
+    src: url('/static/font/bangla_mn-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/font/bangla_mn-webfont.woff') format('woff'),
+         url('/static/font/bangla_mn-webfont.ttf') format('truetype'),
+         url('/static/font/bangla_mn-webfont.svg#bangla_mnregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html,body{
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	height:100%;
+	min-width:936px;
+	background-color: #d0e4be !important;
+	line-height: 20px;
+	font-family: bangla_mnregular;
+}
+
+h1, h2, h3, h4, p, a {
+	font-family: bangla_mnregular !important;
+}
+
+.ui-li-heading {
+    font-size: 15px !important;
+}
+
+#content, #footer {
+	padding-right: 200px; 
+	padding-left: 200px;
+}
+
+.forms {
+	border: solid;
+	border-width: 1px;
+	padding: 10px;
+	background-color: #b1cae9;
+}
+
+.ui-link-inherit {
+	text-decoration: none !important;
+}
+
+.ui-li-heading{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #000;
+	margin-bottom: 0px;
+}
+
+.ui-li-desc{
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	color: #000;
+	padding-left: 10px;
+	font-style: italic;
+	margin-top: 0px;
+}
+
+.ps-toolbar {
+	opacity: 0.8 !important;
+}
+
+#image_map_canvas img, 
+#sightings_map_canvas img, 
+#myobservations_map_canvas img,
+#info_map_canvas img,
+#user_observation_map_canvas img,
+#search_location_map_canvas img,
+#search_map_location_canvas img,
+#observationinfo_map_canvas img {
+  max-width: none;
+}
+
+
+
+
+.lifelistview {
+	list-style: none;	
+}
+
+.menu .btn {
+	width: 200px !important;	
+	height: 20px;
+	line-height: 10px;
+	font-size: 20px;
+	padding-top: 20px;
+}
+
+.btn {
+	width: 200px !important;
+	height: 20px;	
+}
+
+li.btn * h3 {
+    line-height: 1.2em;
+}
+
+#wrapper {
+	margin-top: 20px;	
+}
+
+#thelist li {
+    margin-right: 10px;
+    min-height: 100px;
+    margin-bottom: 10px;
+    width: 220px;
+    padding-top: 10px !important;
+}
+
+input[type="text"], select  {
+	height: 50px !important;
+	width: 600px !important;
+	font-size: 18px;
+	
+}
+
+label {
+	font-size: 20px;
+}
+
+input, select {
+	font-family: bangla_mnregular;
+}
+
+input[type="submit"] {
+	height: 40px;
+	width: 600px;
+	font-size: 18px;
+}
+
+#pinned  {
+    width: 300px;
+}
+
+#pinned ul li {
+    margin-right: 5px;
+    width: 220px;
+}
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modalload {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('/static/images/desktop-loader.gif')
+                50% 50%
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modalload {
+    display: block;
+}
+
+.message {
+	height: 20px;
+	background-color:#B9D9D8;
+	margin-bottom: 20px;
+}
+
+.ps-active {
+	overflow: hidden;	
+}
+
+.sharelinks {
+	margin-top: 10px;
+}
+
+.sharelinks iframe {
+	margin-top: -5px;	
+}
+
+.menu .btn {
+	width: 150px;	
+}
+
+
+/*
+div.ps-modal div div.ps-toolbar-content
+{
+	width: 44px;
+	height: 104px;
+	margin: 0 auto 0;
+	background-image: url(/static/images/jquery/modal/icons.png);
+	background-repeat: no-repeat;
+}
+*/
+div.ps-toolbar div div.ps-toolbar-content {
+	height: 104px;
+
+}
+
+.page {
+  width: 1400px ;
+  margin-left: auto ;
+  margin-right: auto ;
+}
+
+#Gallery * a img {
+	padding-bottom: 5px;
+}
+
+.menu {
+	text-align: center;
+	margin-left: 50px;
+	margin-top: 35px;
+	margin-bottom: 8px;
+}
+
+.content {
+	font-size: 18px;
+	line-height: 1.3em;
+	background-color: #d0e4be;
+	padding:140px;
+	padding-top:0px;
+	padding-bottom:0px;	
+}
+
+.page {
+	background-color: #d0e4be;
+	height: 100%;
+	min-height: 100%;
+
+}
+
+.content * .btn {
+	width: 250px !important;	
+	height: 20px;
+	line-height: 15px;
+	font-size: 16px;
+	padding-top: 10px;
+}
+
+.sightingslist {
+	padding: 10px; 
+	background-color: #f4f3f0; 
+	margin-bottom: 20px; 
+	min-height: 100px;
+
+}
+
+.observationslist {
+	padding: 10px; 
+	border: solid; 
+	border-width: 1px; 
+	background-color: #F1E8CB; 
+	margin-bottom: 20px;
+
+}
+
+.intropage * a, .intropage * a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+.kbtn {
+	margin-right: 40px;
+}
+
+.maintitle {
+	text-align:left; 
+	padding-left: 270px;
+}
+
+.maintitle h2, .maintitle h2 a, .maintitle h2 a:visited {
+	color:#688eb5 !important;
+	font-weight: bold !important;
+}

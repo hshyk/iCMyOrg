@@ -1,0 +1,18 @@
+[% meta.title = 'View all Hosts' %]
+<h2>View all Hosts</h2>
+<table class="tablesorter" id="list">
+	<thead>  
+		<tr>
+			<th>Scientific Name</th>
+			<th>Common Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH host IN hosts -%]
+		<tr>
+	        <td><a href="[% c.uri_for(c.controller('Admin').action_for('viewHostByID'), host.host_id) -%]" />[% host.scientific_name %]</td>
+	        <td>[% host.common_name %]</td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

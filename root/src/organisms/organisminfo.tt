@@ -1,0 +1,154 @@
+[% meta.title = organism.common_name -%]
+[% meta.opengraph.title = organism.common_name -%]
+[% meta.opengraph.image = c.uri_for(organism.image_info_search(c.config.Site.characters.defaultcharactertype).filename) _ '/img-mobile.jpg' -%]
+[% js.files = ('page.' _  c.config.Site.organisms.lower _'.organisminfo') -%]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+var imageURL = "[% c.uri_for(c.controller('Organisms_REST').action_for('searchSystemsImageByTypes')) -%]";
+var organismId	= [% organism.organism_id -%];
+var organism = "[% c.config.Site.organisms_singular -%]";
+var host = "[% c.config.Site.host.name_singular -%]";
+	[% PROCESS include/js/mapmarkers.tt -%]
+	[% markercount = 0 -%]
+var observations = new Array();
+	[% FOREACH observation IN observations -%]
+observations[[% markercount-%]] = new Array();
+observations[[% markercount-%]]['latitude'] = '[% observation.latitude -%]';
+observations[[% markercount-%]]['longitude'] = '[% observation.longitude -%]';
+observations[[% markercount-%]]['type'] = '[% observation.observation_type.observation_name | escape_js | html  -%]';
+observations[[% markercount-%]]['date_observed'] = '[% observation.date_observed_display -%]';
+observations[[% markercount-%]]['location_detail'] = '[% observation.location_detail | escape_js | html   -%]';
+observations[[% markercount-%]]['filename'] = '[% observation.first_image_search(c.config.Site.characters.defaultcharactertype).filename -%]';
+observations[[% markercount-%]]['source'] = '[% observation.source | escape_js | html -%]';
+observations[[% markercount-%]]['common_name'] = '[% observation.location_detail.substr(0, 40) | escape_js-%][% IF observation.location_detail.length > 40 %]...[% END %]';
+observations[[% markercount-%]]['observation_id'] = '[% observation.observation_id -%]';
+observations[[% markercount-%]]['url'] = '[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]';
+			[% IF observation.user_organism -%] 
+observations[[% markercount-%]]['observed_by'] = '[% observation.user_organism.user.get_full_name | escape_js | html  -%]';
+			[% END -%]
+		[% markercount = markercount + 1 -%]
+	[% END -%]
+	[% topimages = "" -%]
+	[% topcount = 0 -%]
+photoRequest = new Object();
+photoInfo = null;
+photoInfo = new Array();
+photoInfo['organism'] = new Array();
+photoInfo['host'] = new Array();
+	[% charactertypes = c.config.Site.organisminfo.charactertypes.sort -%]
+	[% imagetypes = c.config.Site.organisminfo.imagetypes.sort -%]
+	[% FOREACH charactertype IN charactertypes -%]
+		[% jsoncharactertype = charactertype.replace(' ','').replace('-','_').lower -%]
+photoRequest.[% jsoncharactertype -%] = new Object();
+		[% FOREACH imagetype IN imagetypes -%]
+		[% IF images.$charactertype.$imagetype.images.size > 0 -%]
+			[% jsonimagetype = imagetype.replace('[^a-z8-9]+', '') -%]    
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%] = new Object();
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%].charactertype = "[% charactertype -%]";
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%].imagetype = "[% imagetype -%]";
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%].current = 1;
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%].total =  Math.ceil([% images.$charactertype.$imagetype.numberofimages / 10 -%]);
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%].info = [];
+			[% json = "" -%]
+				[% FOREACH info IN images.$charactertype.$imagetype.images -%]
+					[% IF topcount < 3 && charactertype == c.config.Site.organisminfo.topimages.charactertype  && imagetype == c.config.Site.organisminfo.topimages.imagetype -%]
+						[% topcount = topcount + 1 -%]
+						[% topimages = topimages _ '<img src="' _ info.filename _ '/thumb.jpg" style="margin-right: 5px;" />' -%]
+					[% END -%]
+					[% json = json _ "{'image_id': "_  info.image_id _ ", 'filename': '" _  info.filename _ "'}," -%]
+photoInfo['organism'][[% info.image_id -%]] = "[% info.create_info_string  | escape_js | html -%]";
+				[% END -%]
+			[% json = "[" _ json _ "]" -%]
+photoRequest.[% jsoncharactertype -%].[% jsonimagetype -%].info = [% json.replace(',]',']') -%];
+			[% END -%]
+		[% END -%]
+	[% END -%]
+var usehost = false;
+	[% IF c.config.Site.host.enabled == 1 -%]
+usehost = true;
+photoHostRequest = new Object();
+		[% FOREACH host IN organism.hosts -%]
+		[% jsonname = host.common_name.replace('[^a-z8-9]+', '') -%]
+photoHostRequest.[% jsonname -%] = new Object();
+photoHostRequest.[% jsonname -%].charactertype = "[% c.config.Site.host.name_singular -%]";
+photoHostRequest.[% jsonname -%].imagetype = "[% host.common_name -%]";
+photoHostRequest.[% jsonname -%].info = [];
+			[% json = "" -%]
+			[% FOREACH info IN host.hostimages -%]
+				[% json = json _ "{'image_id': "_  info.image_id _ ", 'filename': '" _  info.filename _ "'}," -%]
+photoInfo['host'][[% info.image_id -%]] = "[% info.create_info_string -%]";
+			[% END -%]
+			[% json = "[" _ json _ "]" -%]
+photoHostRequest.[% jsonname -%].info = [% json.replace(',]',']') -%];
+		[% END -%]
+	[% END -%]
+		
+	[% IF layout == 'mobile' -%]	
+	var organismInfoLoaded = false;
+$('div:jqmData(url="/[% c.request.path -%]")').live('pageshow',function(){
+	if (!organismInfoLoaded) {
+		organismInfo();
+		setFacebookLike('.fb-like', '[% c.uri_for(c.controller('Organisms').action_for('viewOrganismInfo'), organism.url)  -%]');
+		var map = createMap('#info_map_canvas', null, null);
+		//createMap_setMapBounds('#info_map_canvas');
+		locationSelector_addAllMarkers('#info_map_canvas', observations);
+		google.maps.event.trigger(map, 'resize');
+		locationSelector_markerDescriptions("#info_map_canvas");
+		organismInfoLoaded = true;
+	}
+});	
+	
+$('div:jqmData(url="/[% c.request.path -%]")').live('pagebeforehide',function(){
+	delete myScroll;
+	$('#wrapper').remove();
+});
+	[% ELSE -%]
+$(document).ready( function() {
+	organismInfo();
+	var map = createMap('#info_map_canvas', null, null);
+	locationSelector_addAllMarkers('#info_map_canvas', observations);
+	locationSelector_markerDescriptions("#info_map_canvas");
+});		
+	[% END -%]
+[% END -%]
+</script>
+<h2>[% organism.common_name | html %]</h2>
+<h3>[% organism.scientific_name | html %]</h3>
+
+[% topimages -%]
+<br />
+[% IF layout != 'kiosk' -%]
+<p><a class="btn" data-role="button" data-ajax="false" href="[% c.uri_for(c.controller('User').action_for('addObservation'), { 'organism' => organism.organism_url}) -%]">Add an Observation</a></p>
+
+<br />
+[% END -%]
+<span class="fb-like"></span>
+<br /><br />
+[% organism.description -%]
+<p>&nbsp;</p>
+<script type="text/javascript">
+var photo=new Array();
+</script>
+<div id="Gallery">
+
+<br clear="all" />
+</div>
+
+<strong>Locations Observed:</strong>
+<div style="position: relative;">
+<div id="info_map_canvas" style="width: 100%; height: 300px;"></div>
+</div>
+<p>&nbsp;</p>	
+
+<strong>Users who have observed this [% c.config.Site.organisms_singular.lower -%]:</strong>
+<br />
+[% IF users_organisms.size == 0 -%]
+None
+[% END -%]
+[% FOREACH user_organism IN users_organisms -%]
+	<a href="[% c.uri_for(c.controller('Organisms').action_for('viewUserOrganismInfo'), organism.organism_url, user_organism.users.provider_name_lower, user_organism.users.authid ) %]">[% user_organism.users.username -%]</a>
+	<img src="[% c.uri_for('/static/images/' _ user_organism.users.provider.provider_name _ '.jpg') -%]" width="15" height="15" border="0" /> <br />
+[% END -%]
+<br /><br />
+

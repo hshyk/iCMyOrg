@@ -1,0 +1,26 @@
+[% meta.title = 'View Host Images' %]
+<script type="text/javascript">
+[% USE Filter.Minify.JavaScript.XS -%]
+[% FILTER minify_js -%]
+	$(document).ready(function() { 
+		startTableSorter("hostList");
+	});
+[% END -%]
+</script>
+<h2>View Host Images</h2>
+<table class="tablesorter" id="hostList">
+	<thead>  
+		<tr>
+			<th>Scientific Name</th>
+			<th>Common Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH host IN hosts -%]
+		<tr>
+	        <td><a href="[% c.uri_for(c.controller('Admin').action_for('viewImagesHostsByID'), host.host_id)%]" />[% host.scientific_name %]</a></td>
+	        <td>[% host.common_name %]</td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

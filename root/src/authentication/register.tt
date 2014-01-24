@@ -1,0 +1,10 @@
+[% meta.title = 'Register' %]
+<h3>Select your method of registration</h3>
+<p><a class="btn" data-role="button" data-icon="site" data-ajax="false" href="[% c.uri_for(c.controller('Authentication').action_for('registerSite')) %]">Register using [% c.config.name -%]</a><p>
+[% IF c.config.OAuth.facebook.enabled -%]
+<p><a class="btn" data-role="button" data-icon="facebook" href="[% c.uri_for(c.controller('Authentication').action_for('loginFacebook')) %]" data-ajax="false" >Register using Facebook</a><p>
+[% END -%]
+[% IF c.config.OAuth.twitter.enabled -%]
+<p><a class="btn" data-role="button" data-icon="twitter" href="[% c.uri_for(c.controller('Authentication').action_for('loginTwitter')) %]" data-ajax="false" >Register using Twitter</a><p>
+[% END -%]
+<p>&nbsp;</p>

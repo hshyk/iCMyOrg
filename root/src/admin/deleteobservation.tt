@@ -1,0 +1,5 @@
+<h2>Delete this observation?</h2>
+<span class="error">[% status_msg %]</span>
+<p>Please note that deleting this observation will delete all images and notes attached to it.</p>
+[% form.render %]
+

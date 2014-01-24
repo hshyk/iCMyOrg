@@ -1,0 +1,20 @@
+[% META title = 'View all States' %]
+<h2>View all States</h2>
+<table class="tablesorter" id="list">
+	<thead>
+		<tr>
+			<th>Character Type</th>
+			<th>Character Name</th>
+			<th>State Name</th>
+		</tr>
+	</thead>
+	<tbody>
+	    [% FOREACH state IN states -%]
+		<tr>
+			<td>[% state.character.character_type.character_type %]</td>
+			<td><a href="[% c.uri_for(c.controller('Admin').action_for('viewCharacterByID'), state.character.character_id) %]" />[% state.character.character_name %]</a></td>
+			<td><a href="[% c.uri_for(c.controller('Admin').action_for('viewStateByID'), state.state_id) %]" />[% state.state_name %]</a></td>
+		</tr>
+	    [% END -%]
+    </tbody>
+</table>

@@ -1,0 +1,6 @@
+[% IF status_msg.length > 0 || c.flash.status_msg.length > 0 -%]
+<div class="message">[% status_msg || c.flash.status_msg %]</div>
+[% END -%]
+[% IF error_msg.length > 0 -%]
+<div class="error_head_msg">[% error_msg %]</div>
+[% END -%]

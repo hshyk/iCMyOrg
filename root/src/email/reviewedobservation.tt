@@ -1,0 +1,21 @@
+<table class="w580" border="0" cellpadding="0" cellspacing="0" width="580">
+                            <tbody><tr>
+                                <td class="w580" width="580">
+                                    <p class="article-title" align="left"><singleline label="Title">Your pending observation has been reviewed!</singleline></p>
+                                    <div class="article-content" align="left">
+                                        <multiline label="Description">
+<p>Your observation has been reviewed. The [% c.config.Site.organisms_singular.lower -%] that was chosen was [% observation.organism.common_name -%].
+The following notes were added:<br />
+[% observation.latest_review_comment -%]<br />
+</p>
+<p><a href="[% c.uri_for(c.controller('User').action_for('observationInfo'), observation.observation_id) -%]">Click here to view this observation.</a></p>
+<p>If this is email was sent in error please contact us at [% c.config.Email.reply -%]</p>
+</multiline>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr><td class="w580" height="10" width="580"></td></tr>
+                        </tbody></table>
+
+
+

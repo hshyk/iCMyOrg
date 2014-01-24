@@ -1,0 +1,5 @@
+[% js.files = ('ckeditor') -%]
+[% meta.title = 'Add a '_ c.config.Site.organisms_singular %]
+<h2>Add a [% c.config.Site.organisms_singular -%]</h2>
+[% PROCESS include/html/messages.tt -%]
+[% form.render %]
