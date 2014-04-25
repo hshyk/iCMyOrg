@@ -1,6 +1,6 @@
 <h2>Are you sure you would like to remove the photo?</h2><br />
 <span class="error">[% status_msg %]</span>
 
-<a rel="prettyPhoto" href="[% image.filename %]"><img src="[% image.filename %]/thumb.jpg" /></a><br />
+<a rel="prettyPhoto" href="[% image.filename %]/img-web.jpg"><img src="[% image.filename %]/thumb.jpg" /></a><br />
 [% form.render %]
 

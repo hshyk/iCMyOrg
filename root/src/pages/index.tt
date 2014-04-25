@@ -20,7 +20,7 @@
 			<a data-dom-cache="true" href="[% c.uri_for(c.controller('User').action_for('viewLifeList')) -%]"><img src="/static/images/icons/life-list.png"></a>
 		</div>
 		<div class="icon">
-			<a href="[% c.uri_for(c.controller('Page').action_for('instructions')) -%]"><img src="/static/images/icons/instructions.png"></a>
+			<a href="[% c.uri_for(c.controller('Pages').action_for('instructions')) -%]"><img src="/static/images/icons/instructions.png"></a>
 		</div>
 	</div>
 <div style="margin-left: 10px;">
@@ -53,12 +53,6 @@ Find all of the latest sightings that users have observed.</div></a></p>
 </div>
 [% ELSE -%]
 	[%# PLACE DESKTOP/OTHER CONTENT HERE %]
-	<h1>Welcome to iCBug</h1>
+	<h1>Welcome to [% c.config.name -%]</h1>
 	<p>&nbsp;</p>
-	<p>The iCBug project started off as 
-	the Connecticut Butterfly Atlas Project in 1995. The goal of the Atlas project was to map the distribution of butterfly species in the
-	state.  This site has taken the data produced from the project and digitized it to provide an online user interaction.</p>
-	<p>&nbsp;</p>
-	<p>Through this site you can explore the different butterflies around Connecticut. You can search for them by name, location and description.
-	Once you have found a butterfly you can then add an observation as well as photos of it.</p>
 [% END -%]

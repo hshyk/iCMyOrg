@@ -24,7 +24,7 @@
 			<td><img src="[% image.filename -%]/thumb.jpg" /></td>
 			<td>[% image.image_type.image_type_name -%]</td>
 			<td><a href="[% c.uri_for(c.controller('Admin').action_for('editImageHostByID'), image.image_id) -%]">Edit this image</a></td>
-			<td><a href="">Delete this image</a></td>
+			<td><a href="[% c.uri_for(c.controller('Admin').action_for('deleteImageHostByID'), image.image_id) -%]">Delete this image</a></td>
 		</tr>
 	[% END -%]
 	</tbody>

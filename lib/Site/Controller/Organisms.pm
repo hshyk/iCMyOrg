@@ -194,19 +194,12 @@ sub viewOrganismInfo :Chained('base') :PathPart('name')  :Args(1) :Sitemap(*) {
 			
 		}
 	}
-	
-	# Used for setting default month and day for date search
-	(my $second, my $minute, my $hour,my $day, my $month, my $yearOffset, my $dayOfWeek, my $dayOfYear, my $daylightSavings) = localtime();
   	
   	$c->stash(
   		template		=>	'organisms/organisminfo.tt',
   		organism		=>	$organism,
   		observations	=> [
-  			$organism->observations->searchActiveOrganismPointsAroundDate(
-				$month+1,
-				$day,
-				25
-			)
+  			$organism->observations->searchActiveOrganismPoints()
 		],
 		users_organisms			=>	[
 			$c->model('DB::UsersOrganism')->searchOrganismWithActiveUserObservations($organism->organism_id)

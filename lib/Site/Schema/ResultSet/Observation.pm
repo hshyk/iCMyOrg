@@ -139,6 +139,43 @@ sub searchActiveOrganismPointsAroundDate {
 	);
 }
 
+sub searchActiveOrganismPoints {
+	my ($self, $month, $day, $rows) = @_;
+	
+	return $self->search(
+		{
+			'observation_type.observation_name' =>  
+	  			{
+	        		-not_in => $self->result_source->schema->systemobservation,
+	    		},
+	    	'observestatus.status_name' => $self->result_source->schema->observationstatus->{published},    	
+			-or => [
+	    		'me.user_organism_id' => undef,
+	    		'status.status_name' => $self->result_source->schema->roles->{user_active}
+			]
+		},
+		{
+			join	=> [
+				'images',
+				'organism',
+				{
+					'user_organism' => {
+						'users'	=> 'status'
+					} 
+				},
+				'user_organism',
+				'observation_type',
+				'observestatus'
+			],
+			prefetch	=> [
+				'images',
+				'organism',
+				'observation_type'
+			],
+		}
+	);
+}
+
 sub searchPointsNearBy {
 	my ($self, $charactertype, $month, $day, $latitude, $longitude, $rows ) = @_;
 	

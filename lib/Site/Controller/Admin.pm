@@ -675,8 +675,63 @@ sub editImageHostByID :Chained('base') :PathPart('edit/host/image') :Args(1) {
 		"Could not update image", 
 		'admin/edithostimage.tt'
 	]);	
+}
+
+=head2 deleteImageHostByID
+
+Delete images from a host
+
+=cut
+sub deleteImageHostByID :Chained('base') :PathPart('delete/host/image') :Args(1) {
+	my ($self, $c, $image_id) = @_;
 
 	
+	my @images;
+	
+	#grab the image by the id
+	my $image = $c->model('DB::HostImage')->find(
+		{
+			image_id => $image_id
+		}
+	);
+
+  	$c->stash(
+  		image => $image
+  	);
+  	my $file = '';
+  	
+  	if ($c->request->method eq 'POST') {
+  		my $path = Site->path_to(
+			'root',
+			 $image->filename
+		)->stringify;
+		push(@images,$path);
+		push(@images,$path.'-original.jpg');
+
+  	}
+  
+  	
+  	
+  	if ($c->forward('formprocess',[ 
+		Site::Form::Admin::DeleteObject->new(
+			schema	=>	$c->model("DB")->schema,
+		),
+		$image,  
+		"Photo Removed from Observation", 
+		"Could not delete host photo", 
+		'admin/deleteimageobservation.tt'
+	])) {
+		$c->model("Image::Tiler")->deleteImages(
+			@images
+		);
+		$c->response->redirect(
+			$c->uri_for(
+				$c->controller('Admin')->action_for(
+					'/'
+				)
+			)
+		)
+	}
 }
 
 =head2 addOrganismHost

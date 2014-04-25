@@ -63,7 +63,7 @@
 			<a data-ajax="false" photoid="[% observation.first_image.image_id -%]" href="[% observation.first_image.filename -%]/img-[% imagetouse -%].jpg"><img src="[% observation.first_image.filename -%]/thumb.jpg" imagetype="[% c.config.Site.organisms_singular -%]" /></a>
 		</div>
 		<div style="margin-left: 110px;">
-		<p><strong><a href="[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]" />[% observation.location_detail | escape_js  -%]</a></strong></p>
+		<p><strong><a href="[% c.uri_for(c.controller('Organisms').action_for('viewObservation'), observation.observation_id) -%]" />[% observation.location_detail | html  -%]</a></strong></p>
 		<p><strong>[% c.config.Site.organisms_singular -%]:</strong> <a href="[% c.uri_for(c.controller('Organisms').action_for('viewOrganismInfo'), observation.organism.organism_url) -%]" />[% observation.organism.common_name -%]</a></p>
 		<p><strong>Observed on:</strong> [% observation.date_observed_display -%]</p>
 		<p><strong>Observed by:</strong> <a href="[% c.uri_for(c.controller('Organisms').action_for('viewUserOrganismInfo'), observation.organism.organism_url, observation.user_organism.user.provider_name_lower, observation.user_organism.user.authid) %]">[% observation.user_organism.user.username | escape_js  -%]</a>
